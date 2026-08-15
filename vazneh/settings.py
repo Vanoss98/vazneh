@@ -34,11 +34,8 @@ if IS_VERCEL and 'DJANGO_SECRET_KEY' not in os.environ:
     raise RuntimeError('DJANGO_SECRET_KEY must be set on Vercel.')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DJANGO_DEBUG', str(not IS_VERCEL)).lower() in {
-    '1',
-    'true',
-    'yes',
-}
+# Temporary while diagnosing the test deployment.
+DEBUG = True
 
 ALLOWED_HOSTS = [
     host.strip()

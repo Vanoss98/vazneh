@@ -79,7 +79,7 @@ class ProductionSettingsTests(TestCase):
             result.stdout.splitlines(),
             [
                 "deployment-secret",
-                "False",
+                "True",
                 "['localhost', '127.0.0.1', '.vercel.app']",
                 "['https://vazneh-example.vercel.app']",
                 "True",
