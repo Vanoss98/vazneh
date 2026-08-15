@@ -164,6 +164,16 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+if IS_VERCEL:
+    STORAGES = {
+        'default': {
+            'BACKEND': 'main.storage.VercelBlobStorage',
+        },
+        'staticfiles': {
+            'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+        },
+    }
+
 CKEDITOR_5_FILE_UPLOAD_PERMISSION = 'staff'
 CKEDITOR_5_MAX_FILE_SIZE = 5
 CKEDITOR_5_IMAGE_CLEANUP = True

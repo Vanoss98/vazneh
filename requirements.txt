@@ -5,3 +5,4 @@ dj-database-url>=2.2,<3
 django-ckeditor-5==0.2.20
 jdatetime==4.1.1
 psycopg[binary]>=3.1.8,<4
+vercel==0.10.0; python_version >= "3.10"

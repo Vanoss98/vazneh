@@ -1,10 +1,13 @@
 import importlib
+import importlib.util
 import os
 import subprocess
 import sys
+from types import SimpleNamespace
 
 from django.conf import settings
-from django.test import TestCase
+from django.core.files.base import ContentFile
+from django.test import SimpleTestCase, TestCase
 from django.test.utils import override_settings
 from django.urls import clear_url_caches
 
@@ -61,7 +64,8 @@ class ProductionSettingsTests(TestCase):
                     "print(settings.CSRF_TRUSTED_ORIGINS); "
                     "print(settings.SESSION_COOKIE_SECURE); "
                     "print(settings.CSRF_COOKIE_SECURE); "
-                    "print(settings.SECURE_PROXY_SSL_HEADER)"
+                    "print(settings.SECURE_PROXY_SSL_HEADER); "
+                    "print(getattr(settings, 'STORAGES', {}).get('default', {}).get('BACKEND', ''))"
                 ),
             ],
             cwd=settings.BASE_DIR,
@@ -81,6 +85,7 @@ class ProductionSettingsTests(TestCase):
                 "True",
                 "True",
                 "('HTTP_X_FORWARDED_PROTO', 'https')",
+                "main.storage.VercelBlobStorage",
             ],
         )
 
@@ -111,7 +116,81 @@ class EnglishSlugTests(TestCase):
         self.assertEqual(project.slug, "sample-industrial-project")
 
 
+class VercelBlobStorageTests(SimpleTestCase):
+    def storage_class(self):
+        if importlib.util.find_spec("main.storage") is None:
+            self.fail("main.storage does not exist")
+        storage_module = importlib.import_module("main.storage")
+        storage_class = getattr(storage_module, "VercelBlobStorage", None)
+        self.assertIsNotNone(storage_class)
+        return storage_class
+
+    def test_uploads_to_public_blob_and_returns_its_url(self):
+        blob_url = (
+            "https://example.public.blob.vercel-storage.com/"
+            "projects/main/crane-random.png"
+        )
+
+        class BlobClient:
+            def put(self, *args, **kwargs):
+                self.args = args
+                self.kwargs = kwargs
+                return SimpleNamespace(url=blob_url)
+
+        client = BlobClient()
+        storage = self.storage_class()(client=client)
+
+        saved_name = storage.save(
+            "projects/main/crane.png",
+            ContentFile(b"image bytes"),
+        )
+
+        self.assertEqual(saved_name, blob_url)
+        self.assertEqual(storage.url(saved_name), blob_url)
+        self.assertEqual(client.args, ("projects/main/crane.png", b"image bytes"))
+        self.assertEqual(client.kwargs["access"], "public")
+        self.assertTrue(client.kwargs["add_random_suffix"])
+
+    def test_project_image_field_accepts_a_complete_blob_url(self):
+        self.assertGreaterEqual(
+            Project._meta.get_field("main_image").max_length,
+            500,
+        )
+
+    def test_opens_blob_content_for_django_file_fields(self):
+        class BlobClient:
+            def get(self, name):
+                self.name = name
+                return SimpleNamespace(content=b"stored image")
+
+        client = BlobClient()
+        storage = self.storage_class()(client=client)
+
+        stored_file = storage.open(
+            "https://example.public.blob.vercel-storage.com/crane.png"
+        )
+
+        self.assertEqual(stored_file.read(), b"stored image")
+        self.assertEqual(
+            client.name,
+            "https://example.public.blob.vercel-storage.com/crane.png",
+        )
+
+
 class CatalogueContentTests(TestCase):
+    def test_contact_page_embeds_the_confirmed_google_map(self):
+        response = self.client.get("/contact/")
+
+        self.assertContains(
+            response,
+            "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d404.8482932690663",
+        )
+
+    def test_contact_page_does_not_show_the_company_website(self):
+        response = self.client.get("/contact/")
+
+        self.assertNotContains(response, "www.vaznehco.com")
+
     def test_catalogue_products_replace_sample_products(self):
         self.assertEqual(Product.objects.filter(is_active=True).count(), 19)
         self.assertTrue(
