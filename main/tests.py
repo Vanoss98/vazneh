@@ -8,6 +8,8 @@ from django.test import TestCase
 from django.test.utils import override_settings
 from django.urls import clear_url_caches
 
+from .models import Product, Project
+
 
 class HomePageTests(TestCase):
     def test_home_page_uses_the_index_and_base_templates(self):
@@ -81,3 +83,29 @@ class ProductionSettingsTests(TestCase):
                 "('HTTP_X_FORWARDED_PROTO', 'https')",
             ],
         )
+
+
+class EnglishSlugTests(TestCase):
+    def test_new_product_slug_uses_english_title(self):
+        product = Product.objects.create(
+            title="جرثقیل نمونه",
+            title_en="Sample Overhead Crane",
+            subtitle="نمونه",
+            short_description="نمونه",
+            price=1,
+        )
+
+        self.assertEqual(product.slug, "sample-overhead-crane")
+
+    def test_new_project_slug_uses_english_title(self):
+        project = Project.objects.create(
+            title="پروژه نمونه",
+            title_en="Sample Industrial Project",
+            subtitle="نمونه",
+            description="نمونه",
+            location="تهران",
+            latitude=35.6892,
+            longitude=51.3890,
+        )
+
+        self.assertEqual(project.slug, "sample-industrial-project")

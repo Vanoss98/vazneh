@@ -121,7 +121,11 @@ class Product(LocalizedFieldsMixin, models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            base_slug = slugify(self.title, allow_unicode=True) or "product"
+            base_slug = (
+                slugify(self.title_en)
+                or slugify(self.title, allow_unicode=True)
+                or "product"
+            )
             candidate = base_slug
             suffix = 2
             while Product.objects.exclude(pk=self.pk).filter(slug=candidate).exists():
@@ -253,7 +257,11 @@ class Project(LocalizedFieldsMixin, models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            base_slug = slugify(self.title, allow_unicode=True) or "project"
+            base_slug = (
+                slugify(self.title_en)
+                or slugify(self.title, allow_unicode=True)
+                or "project"
+            )
             candidate = base_slug
             suffix = 2
             while Project.objects.exclude(pk=self.pk).filter(slug=candidate).exists():
