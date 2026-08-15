@@ -466,6 +466,7 @@ class ProjectListView(ListView):
                 "url": project.get_absolute_url(),
             }
             for project in self.object_list
+            if project.latitude is not None and project.longitude is not None
         ]
         query_parameters = self.request.GET.copy()
         query_parameters.pop("page", None)

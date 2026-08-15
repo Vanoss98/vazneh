@@ -117,7 +117,7 @@
   </div>
 </section>
 
-<section class="bg-[#fafafa] px-4 pb-20 pt-16 sm:px-6 sm:py-20 lg:px-0 lg:py-24" aria-labelledby="service-process-title">
+{% if process_items %}<section class="bg-[#fafafa] px-4 pb-20 pt-16 sm:px-6 sm:py-20 lg:px-0 lg:py-24" aria-labelledby="service-process-title">
   <div class="mx-auto w-full lg:w-4/5">
     <h2 id="service-process-title" class="text-center text-[clamp(2rem,3.5vw,3.5rem)] font-bold text-[#003577]">{% translate "مسیر اجرای خدمت" %}</h2>
     <div class="mt-10 grid grid-cols-1 gap-4 lg:mt-14 lg:grid-cols-3 lg:gap-0">
@@ -132,7 +132,7 @@
       {% endfor %}
     </div>
   </div>
-</section>
+</section>{% endif %}
 
 {% if related_services %}
 <section class="bg-[#666] px-4 pb-40 pt-14 sm:px-6 sm:pt-16 lg:px-0 lg:pb-48 lg:pt-20" aria-labelledby="related-services-title">

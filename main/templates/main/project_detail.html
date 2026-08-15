@@ -15,7 +15,7 @@
   <div class="mx-auto flex min-h-[460px] w-full items-center px-5 py-16 sm:min-h-[560px] sm:px-8 lg:min-h-[680px] lg:w-4/5 lg:px-0">
     <div class="me-auto w-full max-w-3xl text-start text-white lg:w-[58%]">
       <h1 id="project-hero-title" class="text-[clamp(2.4rem,4.7vw,5rem)] font-bold leading-[1.35] drop-shadow-[0_4px_14px_rgba(0,0,0,.65)]">{{ project.display_title }}</h1>
-      <p class="mt-4 text-[clamp(1.1rem,2vw,1.8rem)] font-medium leading-relaxed text-white/95">{{ project.display_subtitle }}</p>
+      {% if project.display_subtitle %}<p class="mt-4 text-[clamp(1.1rem,2vw,1.8rem)] font-medium leading-relaxed text-white/95">{{ project.display_subtitle }}</p>{% endif %}
     </div>
   </div>
 </section>
@@ -24,9 +24,9 @@
   <div class="mx-auto w-full lg:w-4/5">
     <div class="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,3fr)_minmax(18rem,2fr)] lg:items-start lg:gap-12" dir="{% if LANGUAGE_BIDI %}ltr{% else %}rtl{% endif %}">
       <div class="lg:col-start-2 lg:row-start-1" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">
-        <p class="text-sm font-bold text-[#f0a400]">{{ project.display_location }}</p>
+        {% if project.display_location %}<p class="text-sm font-bold text-[#f0a400]">{{ project.display_location }}</p>{% endif %}
         <h2 id="project-detail-title" class="mt-2 text-2xl font-bold text-slate-950 sm:text-3xl">{{ project.display_title }}</h2>
-        <p class="mt-6 whitespace-pre-line text-sm leading-8 text-slate-700 sm:text-base sm:leading-9">{{ project.display_description }}</p>
+        {% if project.display_description %}<p class="mt-6 whitespace-pre-line text-sm leading-8 text-slate-700 sm:text-base sm:leading-9">{{ project.display_description }}</p>{% endif %}
       </div>
 
       <div class="lg:col-start-1 lg:row-start-1" data-project-gallery dir="ltr">
@@ -55,7 +55,7 @@
       </div>
     </div>
 
-    <section class="mt-16" aria-labelledby="project-features-title">
+    {% if project.features.all %}<section class="mt-16" aria-labelledby="project-features-title">
       <h2 id="project-features-title" class="text-2xl font-bold text-slate-950">{% translate "ویژگی‌های پروژه" %}</h2>
       <div class="mt-7 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
         {% for feature in project.features.all %}
@@ -66,7 +66,7 @@
           <p class="col-span-full text-sm text-slate-500">{% translate "ویژگی‌ای برای این پروژه ثبت نشده است." %}</p>
         {% endfor %}
       </div>
-    </section>
+    </section>{% endif %}
   </div>
 </section>
 {% endblock %}

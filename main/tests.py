@@ -8,7 +8,7 @@ from django.test import TestCase
 from django.test.utils import override_settings
 from django.urls import clear_url_caches
 
-from .models import Product, Project
+from .models import BlogPost, Product, Project, Service
 
 
 class HomePageTests(TestCase):
@@ -109,3 +109,54 @@ class EnglishSlugTests(TestCase):
         )
 
         self.assertEqual(project.slug, "sample-industrial-project")
+
+
+class CatalogueContentTests(TestCase):
+    def test_catalogue_products_replace_sample_products(self):
+        self.assertEqual(Product.objects.filter(is_active=True).count(), 19)
+        self.assertTrue(
+            Product.objects.filter(
+                slug="single-girder-overhead-crane",
+                title="جرثقیل سقفی تک پل",
+            ).exists()
+        )
+        self.assertTrue(
+            Product.objects.filter(
+                slug="c-hook",
+                title="سی هوک",
+            ).exists()
+        )
+
+    def test_only_catalogue_backed_services_are_active(self):
+        self.assertEqual(
+            set(Service.objects.filter(is_active=True).values_list("slug", flat=True)),
+            {"maintenance", "industrial-structures", "spare-parts"},
+        )
+
+    def test_sample_blog_posts_are_unpublished(self):
+        self.assertFalse(BlogPost.objects.filter(is_published=True).exists())
+
+    def test_title_only_catalogue_project_renders_without_map_coordinates(self):
+        Project.objects.all().delete()
+        project = Project.objects.create(
+            title="نیروگاه شهید رجایی",
+            slug="shahid-rajaei-power-plant",
+        )
+
+        response = self.client.get("/projects/")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, project.title)
+        self.assertEqual(response.context["map_projects"], [])
+
+    def test_about_page_uses_catalogue_company_history(self):
+        response = self.client.get("/about/")
+
+        self.assertContains(response, "شرکت وزنه در سال ۱۳۴۳ تأسیس شد")
+        self.assertContains(response, "از سال ۱۳۸۵ شرکت وزنه به مجموعه گروه صنعتی ماموت پیوست")
+
+    def test_home_page_does_not_show_fabricated_testimonials(self):
+        response = self.client.get("/")
+
+        self.assertNotContains(response, "مشتری اول")
+        self.assertNotContains(response, "مدیر پروژه صنایع آریا")

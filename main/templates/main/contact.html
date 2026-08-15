@@ -65,27 +65,35 @@
         <address class="mt-8 space-y-3 text-base font-medium not-italic text-slate-950 sm:mt-10 sm:text-lg">
           <div class="grid min-h-12 grid-cols-[2.25rem_minmax(0,1fr)] items-start gap-5" dir="{% if LANGUAGE_BIDI %}ltr{% else %}rtl{% endif %}">
             <img src="{% static 'icons/map-icon.svg' %}" alt="" class="mt-0.5 h-8 w-7 justify-self-center">
-            <p class="text-start leading-8" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">{% translate "تهران، خیابان احمد قصیر (وزرا)" %}<br>{% translate "شماره ۱۷، ساختمان ساموت، طبقه ۲" %}</p>
+            <p class="text-start leading-8" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">تهران، خیابان وزرا<br>خیابان هفتم، پلاک ۷</p>
           </div>
-          <a href="tel:+982188888888" class="grid min-h-11 grid-cols-[2.25rem_minmax(0,1fr)] items-center gap-5 transition hover:text-[#003577]" dir="ltr">
+          <div class="grid min-h-12 grid-cols-[2.25rem_minmax(0,1fr)] items-start gap-5" dir="{% if LANGUAGE_BIDI %}ltr{% else %}rtl{% endif %}">
+            <img src="{% static 'icons/map-icon.svg' %}" alt="" class="mt-0.5 h-8 w-7 justify-self-center">
+            <p class="text-start leading-8" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">کارخانه: کرج، کمالشهر<br>روبروی پلیس راه</p>
+          </div>
+          <a href="tel:+982188102128" class="grid min-h-11 grid-cols-[2.25rem_minmax(0,1fr)] items-center gap-5 transition hover:text-[#003577]" dir="ltr">
             <img src="{% static 'icons/phone-icon-black.svg' %}" alt="" class="h-7 w-7 justify-self-center">
-            <span class="text-left font-semibold">+98 21 88 88 88 88</span>
+            <span class="text-left font-semibold">+98 21 88 10 21 28</span>
           </a>
-          <a href="mailto:info@vazneh.com" class="grid min-h-11 grid-cols-[2.25rem_minmax(0,1fr)] items-center gap-5 transition hover:text-[#003577]" dir="ltr">
+          <a href="mailto:infovazneh@vaznehco.com" class="grid min-h-11 grid-cols-[2.25rem_minmax(0,1fr)] items-center gap-5 transition hover:text-[#003577]" dir="ltr">
             <img src="{% static 'icons/mail-icon-black.svg' %}" alt="" class="h-6 w-7 justify-self-center">
-            <span class="text-left">info@vazneh.com</span>
+            <span class="text-left">infovazneh@vaznehco.com</span>
           </a>
-          <a href="#" class="grid min-h-11 grid-cols-[2.25rem_minmax(0,1fr)] items-center gap-5 transition hover:text-[#003577]" dir="ltr">
-            <img src="{% static 'icons/whatsapp-icon-black.svg' %}" alt="" class="h-7 w-7 justify-self-center">
-            <span class="text-left">+98 901 901 0000</span>
+          <a href="tel:+982188102188" class="grid min-h-11 grid-cols-[2.25rem_minmax(0,1fr)] items-center gap-5 transition hover:text-[#003577]" dir="ltr">
+            <img src="{% static 'icons/phone-icon-black.svg' %}" alt="" class="h-7 w-7 justify-self-center">
+            <span class="text-left">+98 21 88 10 21 88</span>
           </a>
-          <a href="#" class="grid min-h-11 grid-cols-[2.25rem_minmax(0,1fr)] items-center gap-5 transition hover:text-[#003577]" dir="ltr">
+          <a href="https://www.instagram.com/vazneh_crane/" class="grid min-h-11 grid-cols-[2.25rem_minmax(0,1fr)] items-center gap-5 transition hover:text-[#003577]" dir="ltr" rel="noopener noreferrer">
             <img src="{% static 'icons/insta-icon-black.svg' %}" alt="" class="h-7 w-7 justify-self-center">
-            <span class="text-left">vazneh</span>
+            <span class="text-left">vazneh_crane</span>
           </a>
-          <a href="#" class="grid min-h-11 grid-cols-[2.25rem_minmax(0,1fr)] items-center gap-5 transition hover:text-[#003577]" dir="ltr">
+          <div class="grid min-h-11 grid-cols-[2.25rem_minmax(0,1fr)] items-center gap-5" dir="ltr">
             <img src="{% static 'icons/linkedin-icon-black.svg' %}" alt="" class="h-7 w-7 justify-self-center">
-            <span class="text-left">vazneh</span>
+            <span class="text-left">vazneh company</span>
+          </div>
+          <a href="https://www.vaznehco.com" class="grid min-h-11 grid-cols-[2.25rem_minmax(0,1fr)] items-center gap-5 transition hover:text-[#003577]" dir="ltr">
+            <span aria-hidden="true" class="justify-self-center text-xl font-bold">www</span>
+            <span class="text-left">www.vaznehco.com</span>
           </a>
         </address>
 

@@ -29,12 +29,12 @@
                         </a>
                         <div class="invisible absolute start-0 top-full z-50 w-72 translate-y-2 rounded-[4px] bg-[#003577] py-3 text-white opacity-0 shadow-2xl transition duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100" role="menu">
                             <a href="{% url 'main:product-list' %}" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">{% translate "همه محصولات" %}</a>
-                            <a href="{% url 'main:product-list' %}?type=جرثقیل-سقفی-تک-پل" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">{% translate "جرثقیل سقفی تک پل" %}</a>
-                            <a href="{% url 'main:product-list' %}?type=جرثقیل-سقفی-دو-پل" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">{% translate "جرثقیل سقفی دو پل" %}</a>
-                            <a href="{% url 'main:product-list' %}?type=جرثقیل-ستونی-بازویی" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">{% translate "جرثقیل ستونی بازویی" %}</a>
-                            <a href="{% url 'main:product-list' %}?type=جرثقیل-دیواری-بازویی" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">{% translate "جرثقیل دیواری بازویی" %}</a>
-                            <a href="{% url 'main:product-list' %}?type=جرثقیل-دروازه‌ای" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">{% translate "جرثقیل دروازه‌ای" %}</a>
-                            <a href="{% url 'main:product-list' %}?type=جرثقیل-نیم-دروازه‌ای" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">{% translate "جرثقیل نیم دروازه‌ای" %}</a>
+                            <a href="{% url 'main:product-list' %}?type=overhead-cranes" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">جرثقیل‌های سقفی</a>
+                            <a href="{% url 'main:product-list' %}?type=jib-cranes" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">جرثقیل‌های بازویی</a>
+                            <a href="{% url 'main:product-list' %}?type=gantry-cranes" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">جرثقیل‌های دروازه‌ای</a>
+                            <a href="{% url 'main:product-list' %}?type=special-cranes" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">جرثقیل‌های ویژه</a>
+                            <a href="{% url 'main:product-list' %}?type=material-handling-equipment" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">تجهیزات جابه‌جایی مواد</a>
+                            <a href="{% url 'main:product-list' %}?type=crane-accessories" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">تجهیزات جانبی جرثقیل</a>
                         </div>
                     </div>
 
@@ -43,12 +43,9 @@
                             <span>{% translate "خدمات" %}</span><span class="text-xs" aria-hidden="true">▼</span>
                         </a>
                         <div class="invisible absolute start-0 top-full z-50 w-72 translate-y-2 rounded-[4px] bg-[#003577] py-3 text-white opacity-0 shadow-2xl transition duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100" role="menu">
-                            <a href="{% url 'main:service-detail' 'maintenance' %}" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">{% translate "تعمیر و نگهداری" %}</a>
-                            <a href="{% url 'main:service-detail' 'lifting-equipment' %}" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">{% translate "ساخت تجهیزات لیفتینگ" %}</a>
-                            <a href="{% url 'main:service-detail' 'industrial-structures' %}" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">{% translate "ساخت سازه" %}</a>
-                            <a href="{% url 'main:service-detail' 'spare-parts' %}" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">{% translate "قطعات جانبی و یدکی" %}</a>
-                            <a href="{% url 'main:service-detail' 'installation' %}" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">{% translate "حمل و نصب" %}</a>
-                            <a href="{% url 'main:service-detail' 'consulting' %}" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">{% translate "مشاوره" %}</a>
+                            <a href="{% url 'main:service-detail' 'maintenance' %}" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">تعمیر و نگهداری</a>
+                            <a href="{% url 'main:service-detail' 'industrial-structures' %}" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">سازه‌های فلزی</a>
+                            <a href="{% url 'main:service-detail' 'spare-parts' %}" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">تأمین قطعات یدکی</a>
                         </div>
                     </div>
 
@@ -58,8 +55,8 @@
                         </a>
                         <div class="invisible absolute start-0 top-full z-50 w-64 translate-y-2 rounded-[4px] bg-[#003577] py-3 text-white opacity-0 shadow-2xl transition duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100" role="menu">
                             <a href="{% url 'main:project-list' %}" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">{% translate "همه پروژه‌ها" %}</a>
-                            <a href="{% url 'main:project-list' %}?q=تهران" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">{% translate "پروژه‌های تهران" %}</a>
-                            <a href="{% url 'main:project-list' %}?q=اصفهان" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">{% translate "پروژه‌های اصفهان" %}</a>
+                            <a href="{% url 'main:project-list' %}?q=نیروگاه" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">پروژه‌های نیروگاهی</a>
+                            <a href="{% url 'main:project-list' %}?q=فولاد" class="block px-6 py-3 text-sm font-medium transition hover:bg-[#fdb515] hover:text-slate-950 focus:bg-[#fdb515] focus:text-slate-950 focus:outline-none">پروژه‌های فولادی</a>
                         </div>
                     </div>
 
@@ -109,25 +106,25 @@
                             <summary class="flex min-h-14 cursor-pointer list-none items-center justify-between px-6 py-4 [&::-webkit-details-marker]:hidden"><span>{% translate "محصولات" %}</span><span class="text-sm transition group-open:rotate-180">▼</span></summary>
                             <div class="bg-[#003577] py-2 text-base">
                                 <a href="{% url 'main:product-list' %}" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">{% translate "همه محصولات" %}</a>
-                                <a href="{% url 'main:product-list' %}?type=جرثقیل-سقفی-تک-پل" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">{% translate "جرثقیل سقفی تک پل" %}</a>
-                                <a href="{% url 'main:product-list' %}?type=جرثقیل-سقفی-دو-پل" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">{% translate "جرثقیل سقفی دو پل" %}</a>
-                                <a href="{% url 'main:product-list' %}?type=جرثقیل-ستونی-بازویی" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">{% translate "جرثقیل ستونی بازویی" %}</a>
-                                <a href="{% url 'main:product-list' %}?type=جرثقیل-دیواری-بازویی" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">{% translate "جرثقیل دیواری بازویی" %}</a>
-                                <a href="{% url 'main:product-list' %}?type=جرثقیل-دروازه‌ای" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">{% translate "جرثقیل دروازه‌ای" %}</a>
-                                <a href="{% url 'main:product-list' %}?type=جرثقیل-نیم-دروازه‌ای" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">{% translate "جرثقیل نیم دروازه‌ای" %}</a>
+                                <a href="{% url 'main:product-list' %}?type=overhead-cranes" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">جرثقیل‌های سقفی</a>
+                                <a href="{% url 'main:product-list' %}?type=jib-cranes" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">جرثقیل‌های بازویی</a>
+                                <a href="{% url 'main:product-list' %}?type=gantry-cranes" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">جرثقیل‌های دروازه‌ای</a>
+                                <a href="{% url 'main:product-list' %}?type=special-cranes" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">جرثقیل‌های ویژه</a>
+                                <a href="{% url 'main:product-list' %}?type=material-handling-equipment" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">تجهیزات جابه‌جایی مواد</a>
+                                <a href="{% url 'main:product-list' %}?type=crane-accessories" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">تجهیزات جانبی جرثقیل</a>
                             </div>
                         </details>
 
                         <details class="group bg-white/25" {% if current_page == 'service-list' or current_page == 'service-detail' %}open{% endif %}>
                             <summary class="flex min-h-14 cursor-pointer list-none items-center justify-between px-6 py-4 [&::-webkit-details-marker]:hidden"><span>{% translate "خدمات" %}</span><span class="text-sm transition group-open:rotate-180">▼</span></summary>
                             <div class="bg-[#003577] py-2 text-base">
-                                <a href="{% url 'main:service-list' %}" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">{% translate "همه خدمات" %}</a><a href="{% url 'main:service-detail' 'maintenance' %}" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">{% translate "تعمیر و نگهداری" %}</a><a href="{% url 'main:service-detail' 'lifting-equipment' %}" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">{% translate "ساخت تجهیزات لیفتینگ" %}</a><a href="{% url 'main:service-detail' 'industrial-structures' %}" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">{% translate "ساخت سازه" %}</a><a href="{% url 'main:service-detail' 'spare-parts' %}" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">{% translate "قطعات جانبی و یدکی" %}</a><a href="{% url 'main:service-detail' 'installation' %}" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">{% translate "حمل و نصب" %}</a><a href="{% url 'main:service-detail' 'consulting' %}" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">{% translate "مشاوره" %}</a>
+                                <a href="{% url 'main:service-list' %}" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">همه خدمات</a><a href="{% url 'main:service-detail' 'maintenance' %}" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">تعمیر و نگهداری</a><a href="{% url 'main:service-detail' 'industrial-structures' %}" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">سازه‌های فلزی</a><a href="{% url 'main:service-detail' 'spare-parts' %}" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">تأمین قطعات یدکی</a>
                             </div>
                         </details>
 
                         <details class="group bg-white/40" {% if current_page == 'project-list' or current_page == 'project-detail' %}open{% endif %}>
                             <summary class="flex min-h-14 cursor-pointer list-none items-center justify-between px-6 py-4 [&::-webkit-details-marker]:hidden"><span>{% translate "پروژه‌ها" %}</span><span class="text-sm transition group-open:rotate-180">▼</span></summary>
-                            <div class="bg-[#003577] py-2 text-base"><a href="{% url 'main:project-list' %}" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">{% translate "همه پروژه‌ها" %}</a><a href="{% url 'main:project-list' %}?q=تهران" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">{% translate "پروژه‌های تهران" %}</a><a href="{% url 'main:project-list' %}?q=اصفهان" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">{% translate "پروژه‌های اصفهان" %}</a></div>
+                            <div class="bg-[#003577] py-2 text-base"><a href="{% url 'main:project-list' %}" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">{% translate "همه پروژه‌ها" %}</a><a href="{% url 'main:project-list' %}?q=نیروگاه" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">پروژه‌های نیروگاهی</a><a href="{% url 'main:project-list' %}?q=فولاد" class="block px-7 py-3 transition hover:bg-[#fdb515] hover:text-slate-950">پروژه‌های فولادی</a></div>
                         </details>
 
                         <a href="{% url 'main:blog-list' %}" class="block min-h-14 bg-white/25 px-6 py-4 {% if current_page == 'blog-list' or current_page == 'blog-detail' %}border-s-4 border-[#fdb515]{% endif %}">{% translate "بلاگ" %}</a>
@@ -191,47 +188,44 @@
                 <nav class="text-center sm:text-start {% if LANGUAGE_BIDI %}lg:border-r{% else %}lg:border-l{% endif %} lg:border-white/75 lg:px-8" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}" aria-labelledby="footer-products-title">
                     <h2 id="footer-products-title" class="mb-5 text-lg font-bold text-[#fdb515]">{% translate "محصولات" %}</h2>
                     <ul class="space-y-3.5 text-base font-medium text-white/90">
-                        <li><a href="{% url 'main:product-list' %}?type=جرثقیل-سقفی-تک-پل" class="transition hover:text-[#fdb515] focus-visible:text-[#fdb515]">{% translate "جرثقیل سقفی تک پل" %}</a></li>
-                        <li><a href="{% url 'main:product-list' %}?type=جرثقیل-سقفی-دو-پل" class="transition hover:text-[#fdb515] focus-visible:text-[#fdb515]">{% translate "جرثقیل سقفی دو پل" %}</a></li>
-                        <li><a href="{% url 'main:product-list' %}?type=جرثقیل-ستونی-بازویی" class="transition hover:text-[#fdb515] focus-visible:text-[#fdb515]">{% translate "جرثقیل ستونی بازویی" %}</a></li>
-                        <li><a href="{% url 'main:product-list' %}?type=جرثقیل-دیواری-بازویی" class="transition hover:text-[#fdb515] focus-visible:text-[#fdb515]">{% translate "جرثقیل دیواری بازویی" %}</a></li>
-                        <li><a href="{% url 'main:product-list' %}?type=جرثقیل-دروازه‌ای" class="transition hover:text-[#fdb515] focus-visible:text-[#fdb515]">{% translate "جرثقیل دروازه‌ای" %}</a></li>
-                        <li><a href="{% url 'main:product-list' %}?type=جرثقیل-نیم-دروازه‌ای" class="transition hover:text-[#fdb515] focus-visible:text-[#fdb515]">{% translate "جرثقیل نیم دروازه‌ای" %}</a></li>
+                        <li><a href="{% url 'main:product-list' %}?type=overhead-cranes" class="transition hover:text-[#fdb515] focus-visible:text-[#fdb515]">جرثقیل‌های سقفی</a></li>
+                        <li><a href="{% url 'main:product-list' %}?type=jib-cranes" class="transition hover:text-[#fdb515] focus-visible:text-[#fdb515]">جرثقیل‌های بازویی</a></li>
+                        <li><a href="{% url 'main:product-list' %}?type=gantry-cranes" class="transition hover:text-[#fdb515] focus-visible:text-[#fdb515]">جرثقیل‌های دروازه‌ای</a></li>
+                        <li><a href="{% url 'main:product-list' %}?type=special-cranes" class="transition hover:text-[#fdb515] focus-visible:text-[#fdb515]">جرثقیل‌های ویژه</a></li>
+                        <li><a href="{% url 'main:product-list' %}?type=material-handling-equipment" class="transition hover:text-[#fdb515] focus-visible:text-[#fdb515]">تجهیزات جابه‌جایی مواد</a></li>
+                        <li><a href="{% url 'main:product-list' %}?type=crane-accessories" class="transition hover:text-[#fdb515] focus-visible:text-[#fdb515]">تجهیزات جانبی جرثقیل</a></li>
                     </ul>
                 </nav>
 
                 <nav class="text-center sm:text-start {% if LANGUAGE_BIDI %}lg:border-r{% else %}lg:border-l{% endif %} lg:border-white/75 lg:px-8" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}" aria-labelledby="footer-services-title">
                     <h2 id="footer-services-title" class="mb-5 text-lg font-bold text-[#fdb515]"><a href="{% url 'main:service-list' %}" class="transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#fdb515]">{% translate "خدمات" %}</a></h2>
                     <ul class="space-y-3.5 text-base font-medium text-white/90">
-                        <li><a href="{% url 'main:service-detail' 'maintenance' %}" class="transition hover:text-[#fdb515] focus-visible:text-[#fdb515]">{% translate "تعمیر و نگهداری" %}</a></li>
-                        <li><a href="{% url 'main:service-detail' 'lifting-equipment' %}" class="transition hover:text-[#fdb515] focus-visible:text-[#fdb515]">{% translate "ساخت تجهیزات لیفتینگ" %}</a></li>
-                        <li><a href="{% url 'main:service-detail' 'industrial-structures' %}" class="transition hover:text-[#fdb515] focus-visible:text-[#fdb515]">{% translate "ساخت سازه" %}</a></li>
-                        <li><a href="{% url 'main:service-detail' 'spare-parts' %}" class="transition hover:text-[#fdb515] focus-visible:text-[#fdb515]">{% translate "قطعات جانبی و یدکی" %}</a></li>
-                        <li><a href="{% url 'main:service-detail' 'installation' %}" class="transition hover:text-[#fdb515] focus-visible:text-[#fdb515]">{% translate "حمل و نصب" %}</a></li>
-                        <li><a href="{% url 'main:service-detail' 'consulting' %}" class="transition hover:text-[#fdb515] focus-visible:text-[#fdb515]">{% translate "مشاوره" %}</a></li>
+                        <li><a href="{% url 'main:service-detail' 'maintenance' %}" class="transition hover:text-[#fdb515] focus-visible:text-[#fdb515]">تعمیر و نگهداری</a></li>
+                        <li><a href="{% url 'main:service-detail' 'industrial-structures' %}" class="transition hover:text-[#fdb515] focus-visible:text-[#fdb515]">سازه‌های فلزی</a></li>
+                        <li><a href="{% url 'main:service-detail' 'spare-parts' %}" class="transition hover:text-[#fdb515] focus-visible:text-[#fdb515]">تأمین قطعات یدکی</a></li>
                     </ul>
                 </nav>
 
                 <section class="text-center sm:col-span-2 sm:text-start lg:col-span-1 {% if LANGUAGE_BIDI %}lg:border-r lg:pl-0 lg:pr-8{% else %}lg:border-l lg:pr-0 lg:pl-8{% endif %} lg:border-white/75" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}" aria-labelledby="footer-contact-title">
                     <h2 id="footer-contact-title" class="mb-5 text-lg font-bold text-[#fdb515]"><a href="{% url 'main:contact' %}" class="transition hover:text-white">{% translate "تماس" %}</a></h2>
                     <div class="space-y-4 text-base font-medium text-white/95">
-                        <a href="tel:+982188888888" class="block text-lg font-bold transition hover:text-[#fdb515]" dir="ltr">+98 21 88 88 88 88</a>
-                        <a href="mailto:info@vazneh.com" class="flex flex-row-reverse items-center justify-center gap-3 transition hover:text-[#fdb515] sm:justify-start lg:justify-start" dir="ltr">
+                        <a href="tel:+982188102128" class="block text-lg font-bold transition hover:text-[#fdb515]" dir="ltr">+98 21 88 10 21 28</a>
+                        <a href="mailto:infovazneh@vaznehco.com" class="flex flex-row-reverse items-center justify-center gap-3 transition hover:text-[#fdb515] sm:justify-start lg:justify-start" dir="ltr">
                             <img src="{% static 'icons/mail-icon.svg' %}" alt="" class="h-5 w-6">
-                            <span>info@vazneh.com</span>
+                            <span>infovazneh@vaznehco.com</span>
                         </a>
-                        <a href="#" class="flex flex-row-reverse items-center justify-center gap-3 transition hover:text-[#fdb515] sm:justify-start" dir="ltr">
-                            <img src="{% static 'icons/whatsapp-icon.svg' %}" alt="" class="h-6 w-6">
-                            <span>+98 901 901 0000</span>
+                        <a href="tel:+982188102188" class="flex flex-row-reverse items-center justify-center gap-3 transition hover:text-[#fdb515] sm:justify-start" dir="ltr">
+                            <img src="{% static 'icons/phone-icon-black.svg' %}" alt="" class="h-6 w-6 invert">
+                            <span>+98 21 88 10 21 88</span>
                         </a>
-                        <a href="#" class="flex flex-row-reverse items-center justify-center gap-3 transition hover:text-[#fdb515] sm:justify-start" dir="ltr">
+                        <a href="https://www.instagram.com/vazneh_crane/" class="flex flex-row-reverse items-center justify-center gap-3 transition hover:text-[#fdb515] sm:justify-start" dir="ltr" rel="noopener noreferrer">
                             <img src="{% static 'icons/insta-icon.svg' %}" alt="" class="h-6 w-6">
-                            <span>vazneh</span>
+                            <span>vazneh_crane</span>
                         </a>
-                        <a href="#" class="flex flex-row-reverse items-center justify-center gap-3 transition hover:text-[#fdb515] sm:justify-start" dir="ltr">
+                        <div class="flex flex-row-reverse items-center justify-center gap-3 sm:justify-start" dir="ltr">
                             <img src="{% static 'icons/linkedin-icon.svg' %}" alt="" class="h-6 w-6">
-                            <span>vazneh</span>
-                        </a>
+                            <span>vazneh company</span>
+                        </div>
                     </div>
 
                     <a

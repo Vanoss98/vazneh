@@ -208,20 +208,24 @@ class Project(LocalizedFieldsMixin, models.Model):
         allow_unicode=True,
         blank=True,
     )
-    subtitle = models.CharField(max_length=240)
+    subtitle = models.CharField(max_length=240, blank=True)
     subtitle_en = models.CharField(max_length=240, blank=True)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     description_en = models.TextField(blank=True)
-    location = models.CharField(max_length=180, db_index=True)
+    location = models.CharField(max_length=180, blank=True, db_index=True)
     location_en = models.CharField(max_length=180, blank=True, db_index=True)
     latitude = models.DecimalField(
         max_digits=9,
         decimal_places=6,
+        blank=True,
+        null=True,
         validators=[MinValueValidator(-90), MaxValueValidator(90)],
     )
     longitude = models.DecimalField(
         max_digits=9,
         decimal_places=6,
+        blank=True,
+        null=True,
         validators=[MinValueValidator(-180), MaxValueValidator(180)],
     )
     main_image = models.ImageField(upload_to="projects/main/", blank=True)

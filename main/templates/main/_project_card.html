@@ -19,7 +19,7 @@
 
     <div class="absolute inset-x-0 bottom-0 flex min-h-[30%] flex-col justify-center bg-[#003577]/85 px-5 py-4 text-start text-white backdrop-blur-[1px] transition duration-300 group-hover:bg-[#003577]/92 sm:px-7">
       <h2 class="text-xl font-bold leading-snug sm:text-2xl lg:text-[1.65rem]">{{ project.display_title }}</h2>
-      <p class="mt-1.5 line-clamp-2 text-sm font-medium text-white/95 sm:text-base">{{ project.display_subtitle }}</p>
+      {% if project.display_subtitle %}<p class="mt-1.5 line-clamp-2 text-sm font-medium text-white/95 sm:text-base">{{ project.display_subtitle }}</p>{% endif %}
     </div>
   </a>
 </article>
