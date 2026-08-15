@@ -1,4 +1,7 @@
 import importlib
+import os
+import subprocess
+import sys
 
 from django.conf import settings
 from django.test import TestCase
@@ -31,3 +34,50 @@ class HomePageTests(TestCase):
         )
 
         self.assertEqual(response.status_code, 200)
+
+
+class ProductionSettingsTests(TestCase):
+    def test_vercel_environment_uses_secure_runtime_settings(self):
+        environment = os.environ.copy()
+        environment.update(
+            {
+                "DJANGO_SECRET_KEY": "deployment-secret",
+                "VERCEL": "1",
+                "VERCEL_URL": "vazneh-example.vercel.app",
+            }
+        )
+
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-c",
+                (
+                    "from vazneh import settings; "
+                    "print(settings.SECRET_KEY); "
+                    "print(settings.DEBUG); "
+                    "print(settings.ALLOWED_HOSTS); "
+                    "print(settings.CSRF_TRUSTED_ORIGINS); "
+                    "print(settings.SESSION_COOKIE_SECURE); "
+                    "print(settings.CSRF_COOKIE_SECURE); "
+                    "print(settings.SECURE_PROXY_SSL_HEADER)"
+                ),
+            ],
+            cwd=settings.BASE_DIR,
+            env=environment,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+
+        self.assertEqual(
+            result.stdout.splitlines(),
+            [
+                "deployment-secret",
+                "False",
+                "['localhost', '127.0.0.1', '.vercel.app']",
+                "['https://vazneh-example.vercel.app']",
+                "True",
+                "True",
+                "('HTTP_X_FORWARDED_PROTO', 'https')",
+            ],
+        )

@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
+
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +23,39 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%s1de3%3f)^o8fqkm3&tx9+fr)7fuia$#^bt4264!g_&-t^+04'
+IS_VERCEL = os.getenv('VERCEL') == '1'
+
+SECRET_KEY = os.getenv(
+    'DJANGO_SECRET_KEY',
+    'django-insecure-local-development-only',
+)
+
+if IS_VERCEL and 'DJANGO_SECRET_KEY' not in os.environ:
+    raise RuntimeError('DJANGO_SECRET_KEY must be set on Vercel.')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG', str(not IS_VERCEL)).lower() in {
+    '1',
+    'true',
+    'yes',
+}
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.getenv(
+        'DJANGO_ALLOWED_HOSTS',
+        'localhost,127.0.0.1,.vercel.app' if IS_VERCEL else 'localhost,127.0.0.1,testserver',
+    ).split(',')
+    if host.strip()
+]
+
+CSRF_TRUSTED_ORIGINS = []
+if vercel_url := os.getenv('VERCEL_URL'):
+    CSRF_TRUSTED_ORIGINS.append(f'https://{vercel_url}')
+
+SESSION_COOKIE_SECURE = IS_VERCEL
+CSRF_COOKIE_SECURE = IS_VERCEL
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # Application definition
@@ -78,10 +108,11 @@ WSGI_APPLICATION = 'vazneh.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
+        conn_max_age=0,
+        conn_health_checks=True,
+    )
 }
 
 
@@ -128,6 +159,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
