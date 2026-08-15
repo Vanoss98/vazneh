@@ -37,39 +37,6 @@ class HomePageTests(TestCase):
 
 
 class ProductionSettingsTests(TestCase):
-    def test_vercel_postgres_url_is_used_when_database_url_is_missing(self):
-        environment = os.environ.copy()
-        environment.pop("DATABASE_URL", None)
-        environment.update(
-            {
-                "DJANGO_SECRET_KEY": "deployment-secret",
-                "POSTGRES_URL": "postgresql://user:password@db.example.com/vazneh",
-                "VERCEL": "1",
-            }
-        )
-
-        result = subprocess.run(
-            [
-                sys.executable,
-                "-c",
-                (
-                    "from vazneh import settings; "
-                    "print(settings.DATABASES['default']['ENGINE']); "
-                    "print(settings.DATABASES['default']['NAME'])"
-                ),
-            ],
-            cwd=settings.BASE_DIR,
-            env=environment,
-            check=True,
-            capture_output=True,
-            text=True,
-        )
-
-        self.assertEqual(
-            result.stdout.splitlines(),
-            ["django.db.backends.postgresql", "vazneh"],
-        )
-
     def test_vercel_environment_uses_secure_runtime_settings(self):
         environment = os.environ.copy()
         environment.update(

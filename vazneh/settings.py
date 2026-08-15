@@ -107,15 +107,9 @@ WSGI_APPLICATION = 'vazneh.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-database_url = (
-    os.getenv('DATABASE_URL')
-    or os.getenv('POSTGRES_URL')
-    or f'sqlite:///{BASE_DIR / "db.sqlite3"}'
-)
-
 DATABASES = {
-    'default': dj_database_url.parse(
-        database_url,
+    'default': dj_database_url.config(
+        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
         conn_max_age=0,
         conn_health_checks=True,
     )
