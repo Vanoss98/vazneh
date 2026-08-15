@@ -1,0 +1,25 @@
+{% load static i18n %}
+
+<article>
+  <a
+    href="{{ project.get_absolute_url }}"
+    class="group relative block aspect-[4/3] overflow-hidden rounded-sm bg-[#555] focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-[#fdb515]"
+    aria-label="{% blocktranslate with title=project.display_title %}مشاهده پروژه {{ title }}{% endblocktranslate %}"
+  >
+    {% if project.main_image %}
+      <img
+        src="{{ project.main_image.url }}"
+        alt="{{ project.display_title }}"
+        class="absolute inset-0 h-full w-full object-cover transition duration-500 ease-out group-hover:scale-[1.035] group-focus-visible:scale-[1.035] motion-reduce:transition-none"
+        loading="lazy"
+      >
+    {% else %}
+      <img src="{% static 'project-image.png' %}" alt="" class="absolute inset-0 h-full w-full object-cover opacity-50" loading="lazy">
+    {% endif %}
+
+    <div class="absolute inset-x-0 bottom-0 flex min-h-[30%] flex-col justify-center bg-[#003577]/85 px-5 py-4 text-start text-white backdrop-blur-[1px] transition duration-300 group-hover:bg-[#003577]/92 sm:px-7">
+      <h2 class="text-xl font-bold leading-snug sm:text-2xl lg:text-[1.65rem]">{{ project.display_title }}</h2>
+      <p class="mt-1.5 line-clamp-2 text-sm font-medium text-white/95 sm:text-base">{{ project.display_subtitle }}</p>
+    </div>
+  </a>
+</article>

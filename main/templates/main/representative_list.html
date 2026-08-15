@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% translate "نمایندگان وزنه" %}{% endblock %}
+{% block meta_description %}{% translate "فهرست و موقعیت نمایندگان شرکت وزنه در سراسر ایران" %}{% endblock %}
+
+{% block extra_head %}
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  crossorigin=""
+>
+{% endblock %}
+
+{% block content %}
+<section class="relative isolate min-h-[320px] overflow-hidden bg-slate-200 sm:min-h-[390px] lg:min-h-[450px]" aria-labelledby="representatives-hero-title">
+  <img src="{% static 'contact-header.jpeg' %}" alt="" class="absolute inset-0 -z-20 h-full w-full object-cover" aria-hidden="true">
+  <div class="absolute inset-0 -z-10 bg-white/25" aria-hidden="true"></div>
+  <div class="mx-auto flex min-h-[320px] w-full items-center px-5 py-16 sm:min-h-[390px] sm:px-8 lg:min-h-[450px] lg:w-4/5 lg:px-0">
+    <h1 id="representatives-hero-title" class="me-auto text-start text-[clamp(2.5rem,4.8vw,5rem)] font-bold leading-tight text-slate-950 drop-shadow-[0_2px_8px_rgba(255,255,255,.55)]">
+      {% translate "نمایندگان وزنه" %}
+    </h1>
+  </div>
+</section>
+
+<section class="bg-[#fafafa] px-4 pb-40 pt-14 sm:px-6 sm:pt-16 lg:px-0 lg:pb-48 lg:pt-20" aria-labelledby="representatives-list-title">
+  <div class="mx-auto w-full lg:w-4/5">
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,3fr)_minmax(18rem,2fr)] lg:items-center lg:gap-12" dir="{% if LANGUAGE_BIDI %}ltr{% else %}rtl{% endif %}">
+      <div class="lg:col-start-2 lg:row-start-1" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">
+        <h2 class="text-2xl font-bold text-slate-950 sm:text-3xl">{% translate "نزدیک‌ترین نماینده" %}</h2>
+        <form action="{% url 'main:representative-list' %}" method="get" class="relative mt-6 max-w-md">
+          <label for="representative-search" class="sr-only">{% translate "جستجوی نماینده براساس منطقه" %}</label>
+          <input
+            id="representative-search"
+            type="search"
+            name="q"
+            value="{{ search_query }}"
+            placeholder="{% translate 'جستجو براساس منطقه' %}"
+            class="min-h-12 w-full rounded-sm border-2 border-[#fdb515] bg-white py-3 pe-12 ps-4 text-sm font-semibold text-slate-950 outline-none placeholder:text-slate-500 focus:ring-2 focus:ring-[#003577]/25"
+          >
+          <button type="submit" class="absolute end-1 top-1 flex h-10 w-10 items-center justify-center rounded-sm text-slate-950 transition hover:bg-[#fdb515] focus-visible:outline-2 focus-visible:outline-[#003577]" aria-label="{% translate 'جستجو' %}">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="m20 20-4-4"></path>
+            </svg>
+          </button>
+        </form>
+        {% if search_query %}
+          <a href="{% url 'main:representative-list' %}" class="mt-2 inline-flex min-h-11 items-center text-sm font-bold text-[#003577] transition hover:text-[#f0a400]">{% translate "نمایش همه نمایندگان" %}</a>
+        {% endif %}
+
+        <div class="mt-10 max-w-md rounded-sm bg-[#e6e6e6] px-5 py-4 text-sm font-bold text-slate-950">
+          <p class="flex items-center gap-3">
+            <img src="{% static 'icons/phone-icon-black.svg' %}" alt="" class="h-6 w-6">
+            {% translate "تماس با مسئول نمایندگی‌ها" %}
+          </p>
+          <a href="tel:+989019010000" class="mt-3 flex items-center gap-3 text-base transition hover:text-[#003577]" dir="ltr">
+            <img src="{% static 'icons/whatsapp-icon-black.svg' %}" alt="" class="h-6 w-6">
+            <span>+98 901 901 0000</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="relative z-0 h-72 overflow-hidden rounded-sm border border-slate-200 bg-slate-200 sm:h-88 lg:col-start-1 lg:row-start-1 lg:h-[390px]" id="representatives-map" aria-label="{% translate 'نقشه نمایندگان وزنه' %}"></div>
+      {{ map_representatives|json_script:"representative-map-data" }}
+    </div>
+
+    <section class="mt-16 lg:mt-20" aria-labelledby="representatives-list-title">
+      <h2 id="representatives-list-title" class="text-start text-3xl font-bold text-slate-950 sm:text-4xl">{% translate "لیست نمایندگی‌ها" %}</h2>
+
+      <div class="mt-8 grid grid-cols-1 items-start gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+        {% for representative in representatives %}
+          <details class="group overflow-hidden rounded-sm bg-[#e6e6e6]" {% if forloop.first %}open{% endif %}>
+            <summary class="flex min-h-12 cursor-pointer list-none items-center justify-between gap-4 px-5 py-3 text-sm font-bold text-slate-950 transition group-open:bg-[#fdb515] [&::-webkit-details-marker]:hidden">
+              <span>{{ representative.display_city }}</span>
+              <span class="h-2.5 w-2.5 rotate-45 border-b-2 border-r-2 border-slate-950 transition-transform group-open:rotate-[225deg]" aria-hidden="true"></span>
+            </summary>
+            <div class="space-y-4 px-5 pb-6 pt-5 text-sm leading-7 text-slate-800">
+              <p><span class="font-bold text-slate-950">{% translate "نام نماینده:" %}</span> {{ representative.display_name }}</p>
+              <a href="tel:{{ representative.phone }}" class="block font-bold text-[#003577] transition hover:text-[#f0a400]" dir="ltr">{{ representative.phone }}</a>
+              <p><span class="font-bold text-slate-950">{% translate "آدرس:" %}</span><br>{{ representative.display_address }}</p>
+            </div>
+          </details>
+        {% empty %}
+          <div class="col-span-full rounded-sm border border-dashed border-slate-300 bg-white px-6 py-12 text-center">
+            <p class="font-bold text-[#003577]">{% translate "نماینده‌ای در این منطقه پیدا نشد." %}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin=""
+></script>
+<script>
+  (() => {
+    const mapElement = document.getElementById('representatives-map');
+    const dataElement = document.getElementById('representative-map-data');
+    if (!mapElement || !dataElement || typeof L === 'undefined') return;
+
+    const representatives = JSON.parse(dataElement.textContent);
+    const map = L.map(mapElement, { scrollWheelZoom: false }).setView([32.4279, 53.6880], 5);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    const representativeIcon = L.icon({
+      iconUrl: '{% static "icons/map-icon-yellow.svg" %}',
+      iconSize: [34, 48],
+      iconAnchor: [17, 48],
+      popupAnchor: [0, -44]
+    });
+    const bounds = [];
+
+    representatives.forEach((representative) => {
+      const coordinates = [Number(representative.latitude), Number(representative.longitude)];
+      const popup = document.createElement('div');
+      popup.dir = '{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}';
+      popup.className = 'min-w-36 text-start';
+
+      const city = document.createElement('strong');
+      city.textContent = representative.city;
+      const name = document.createElement('span');
+      name.className = 'mt-1 block text-xs text-slate-600';
+      name.textContent = representative.name;
+      const phone = document.createElement('a');
+      phone.href = `tel:${representative.phone}`;
+      phone.dir = 'ltr';
+      phone.className = 'mt-2 block font-bold text-[#003577]';
+      phone.textContent = representative.phone;
+      popup.append(city, name, phone);
+
+      L.marker(coordinates, { icon: representativeIcon }).addTo(map).bindPopup(popup);
+      bounds.push(coordinates);
+    });
+
+    if (bounds.length === 1) map.setView(bounds[0], 11);
+    else if (bounds.length > 1) map.fitBounds(bounds, { padding: [45, 45] });
+  })();
+</script>
+{% endblock %}

@@ -1,0 +1,135 @@
+{% load i18n %}
+<form
+  action="{% url 'main:product-list' %}"
+  method="get"
+  class="rounded-sm bg-[#001b38] px-5 pb-8 pt-5 text-sm text-white sm:px-6"
+  data-product-filters
+>
+  <input type="hidden" name="sort" value="{{ current_sort }}">
+
+  <div class="flex items-center justify-between gap-4 border-b border-white/60 pb-4">
+    <p class="text-sm font-medium" aria-live="polite">{% blocktranslate count counter=paginator.count %}{{ counter }} محصول{% plural %}{{ counter }} محصول{% endblocktranslate %}</p>
+    <a
+      href="{% url 'main:product-list' %}"
+      class="inline-flex min-h-11 items-center gap-2 rounded-sm px-1 text-xs font-medium transition hover:text-[#fdb515] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#fdb515]"
+    >
+      <span class="text-xl leading-none text-[#fdb515]" aria-hidden="true">↻</span>
+      <span>{% translate "حذف فیلترها" %}</span>
+    </a>
+  </div>
+
+  <details class="group border-b border-white/60 py-4" open>
+    <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 text-sm font-medium [&::-webkit-details-marker]:hidden">
+      <span>{% translate "نوع" %}</span>
+      <span class="h-2.5 w-2.5 rotate-45 border-l-2 border-t-2 border-[#fdb515] transition-transform group-open:rotate-[225deg]" aria-hidden="true"></span>
+    </summary>
+    <div class="grid grid-cols-2 gap-2 pb-1 pt-2">
+      {% for product_type in product_types %}
+        <label for="{{ filter_id_prefix }}-type-{{ forloop.counter }}" class="cursor-pointer">
+          <input
+            id="{{ filter_id_prefix }}-type-{{ forloop.counter }}"
+            type="checkbox"
+            name="type"
+            value="{{ product_type.slug }}"
+            class="peer sr-only"
+            {% if product_type.slug in selected_types %}checked{% endif %}
+          >
+          <span class="flex min-h-11 items-center justify-center rounded-sm bg-white px-2 py-2 text-center text-[0.8rem] font-semibold text-slate-950 transition hover:bg-[#ffcf62] peer-checked:bg-[#fdb515] peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[#fdb515]">
+            {{ product_type.display_title }}
+          </span>
+        </label>
+      {% empty %}
+        <p class="col-span-2 text-sm text-white/70">{% translate "نوعی ثبت نشده است." %}</p>
+      {% endfor %}
+    </div>
+  </details>
+
+  <details class="group border-b border-white/60 py-4" open>
+    <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 text-sm font-medium [&::-webkit-details-marker]:hidden">
+      <span>{% translate "ظرفیت" %}</span>
+      <span class="h-2.5 w-2.5 rotate-45 border-l-2 border-t-2 border-[#fdb515] transition-transform group-open:rotate-[225deg]" aria-hidden="true"></span>
+    </summary>
+    <div class="grid grid-cols-2 gap-2 pb-1 pt-2">
+      {% for capacity in capacity_options %}
+        <label for="{{ filter_id_prefix }}-capacity-{{ forloop.counter }}" class="cursor-pointer">
+          <input
+            id="{{ filter_id_prefix }}-capacity-{{ forloop.counter }}"
+            type="checkbox"
+            name="capacity"
+            value="{{ capacity.title }}"
+            class="peer sr-only"
+            {% if capacity.title in selected_capacities %}checked{% endif %}
+          >
+          <span class="flex min-h-11 items-center justify-center rounded-sm bg-white px-2 py-2 text-center text-[0.8rem] font-semibold text-slate-950 transition hover:bg-[#ffcf62] peer-checked:bg-[#fdb515] peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[#fdb515]">
+            {{ capacity.display_title }}
+          </span>
+        </label>
+      {% empty %}
+        <p class="col-span-2 text-sm text-white/70">{% translate "ظرفیتی ثبت نشده است." %}</p>
+      {% endfor %}
+    </div>
+  </details>
+
+  <details class="group border-b border-white/60 py-4" open>
+    <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 text-sm font-medium [&::-webkit-details-marker]:hidden">
+      <span>{% translate "سایز" %}</span>
+      <span class="h-2.5 w-2.5 rotate-45 border-l-2 border-t-2 border-[#fdb515] transition-transform group-open:rotate-[225deg]" aria-hidden="true"></span>
+    </summary>
+    <div class="grid grid-cols-2 gap-2 pb-1 pt-2">
+      {% for size in size_options %}
+        <label for="{{ filter_id_prefix }}-size-{{ forloop.counter }}" class="cursor-pointer">
+          <input
+            id="{{ filter_id_prefix }}-size-{{ forloop.counter }}"
+            type="checkbox"
+            name="size"
+            value="{{ size.title }}"
+            class="peer sr-only"
+            {% if size.title in selected_sizes %}checked{% endif %}
+          >
+          <span class="flex min-h-11 items-center justify-center rounded-sm bg-white px-2 py-2 text-center text-[0.8rem] font-semibold text-slate-950 transition hover:bg-[#ffcf62] peer-checked:bg-[#fdb515] peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[#fdb515]">
+            {{ size.display_title }}
+          </span>
+        </label>
+      {% empty %}
+        <p class="col-span-2 text-sm text-white/70">{% translate "سایزی ثبت نشده است." %}</p>
+      {% endfor %}
+    </div>
+  </details>
+
+  <details class="group py-4" open>
+    <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 text-sm font-medium [&::-webkit-details-marker]:hidden">
+      <span>{% translate "قیمت" %}</span>
+      <span class="h-2.5 w-2.5 rotate-45 border-l-2 border-t-2 border-[#fdb515] transition-transform group-open:rotate-[225deg]" aria-hidden="true"></span>
+    </summary>
+    <div class="pt-3" data-price-range dir="ltr">
+      <div class="relative h-8">
+        <div class="absolute inset-x-0 top-3 h-px bg-white/70" aria-hidden="true"></div>
+        <div class="absolute top-[10px] h-1 rounded-full bg-[#fdb515]" data-price-fill aria-hidden="true"></div>
+        <input
+          type="range"
+          name="min_price"
+          min="{{ price_minimum }}"
+          max="{{ price_maximum }}"
+          value="{{ selected_minimum }}"
+          aria-label="{% translate 'حداقل قیمت' %}"
+          class="pointer-events-none absolute inset-x-0 top-0 h-6 w-full appearance-none bg-transparent [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:cursor-grab [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-[#fdb515] [&::-webkit-slider-runnable-track]:h-0.5 [&::-webkit-slider-runnable-track]:bg-transparent [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:mt-[-7px] [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:cursor-grab [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#fdb515]"
+          data-price-min
+        >
+        <input
+          type="range"
+          name="max_price"
+          min="{{ price_minimum }}"
+          max="{{ price_maximum }}"
+          value="{{ selected_maximum }}"
+          aria-label="{% translate 'حداکثر قیمت' %}"
+          class="pointer-events-none absolute inset-x-0 top-0 h-6 w-full appearance-none bg-transparent [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:cursor-grab [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-[#fdb515] [&::-webkit-slider-runnable-track]:h-0.5 [&::-webkit-slider-runnable-track]:bg-transparent [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:mt-[-7px] [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:cursor-grab [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#fdb515]"
+          data-price-max
+        >
+      </div>
+      <div class="mt-1 flex items-center justify-between gap-4 text-xs text-white/85">
+        <output data-price-min-output>{{ selected_minimum }}</output>
+        <output data-price-max-output>{{ selected_maximum }}</output>
+      </div>
+    </div>
+  </details>
+</form>

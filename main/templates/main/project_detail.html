@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{{ project.display_title }} | {% translate "پروژه‌های وزنه" %}{% endblock %}
+{% block meta_description %}{{ project.display_description|truncatechars:155 }}{% endblock %}
+
+{% block content %}
+<section class="relative isolate min-h-[460px] overflow-hidden bg-slate-950 sm:min-h-[560px] lg:min-h-[680px]" aria-labelledby="project-hero-title">
+  {% if project.main_image %}
+    <img src="{{ project.main_image.url }}" alt="" class="absolute inset-0 -z-20 h-full w-full object-cover" aria-hidden="true">
+  {% else %}
+    <img src="{% static 'project-header.png' %}" alt="" class="absolute inset-0 -z-20 h-full w-full object-cover" aria-hidden="true">
+  {% endif %}
+  <div class="absolute inset-0 -z-10 {% if LANGUAGE_BIDI %}bg-[linear-gradient(90deg,rgba(0,0,0,.10)_0%,rgba(0,0,0,.24)_42%,rgba(0,0,0,.72)_100%)]{% else %}bg-[linear-gradient(270deg,rgba(0,0,0,.10)_0%,rgba(0,0,0,.24)_42%,rgba(0,0,0,.72)_100%)]{% endif %}" aria-hidden="true"></div>
+  <div class="mx-auto flex min-h-[460px] w-full items-center px-5 py-16 sm:min-h-[560px] sm:px-8 lg:min-h-[680px] lg:w-4/5 lg:px-0">
+    <div class="me-auto w-full max-w-3xl text-start text-white lg:w-[58%]">
+      <h1 id="project-hero-title" class="text-[clamp(2.4rem,4.7vw,5rem)] font-bold leading-[1.35] drop-shadow-[0_4px_14px_rgba(0,0,0,.65)]">{{ project.display_title }}</h1>
+      <p class="mt-4 text-[clamp(1.1rem,2vw,1.8rem)] font-medium leading-relaxed text-white/95">{{ project.display_subtitle }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="bg-[#fafafa] px-4 pb-40 pt-14 sm:px-6 sm:pt-16 lg:px-0 lg:pb-48 lg:pt-24" aria-labelledby="project-detail-title">
+  <div class="mx-auto w-full lg:w-4/5">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,3fr)_minmax(18rem,2fr)] lg:items-start lg:gap-12" dir="{% if LANGUAGE_BIDI %}ltr{% else %}rtl{% endif %}">
+      <div class="lg:col-start-2 lg:row-start-1" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">
+        <p class="text-sm font-bold text-[#f0a400]">{{ project.display_location }}</p>
+        <h2 id="project-detail-title" class="mt-2 text-2xl font-bold text-slate-950 sm:text-3xl">{{ project.display_title }}</h2>
+        <p class="mt-6 whitespace-pre-line text-sm leading-8 text-slate-700 sm:text-base sm:leading-9">{{ project.display_description }}</p>
+      </div>
+
+      <div class="lg:col-start-1 lg:row-start-1" data-project-gallery dir="ltr">
+        <div class="relative aspect-[16/10] overflow-hidden rounded-sm bg-slate-300">
+          {% if primary_gallery_image %}
+            <img src="{{ primary_gallery_image.image.url }}" alt="{{ primary_gallery_image.display_alt_text }}" class="h-full w-full object-cover transition-opacity duration-200" data-project-gallery-main>
+          {% elif project.main_image %}
+            <img src="{{ project.main_image.url }}" alt="{{ project.display_title }}" class="h-full w-full object-cover" data-project-gallery-main>
+          {% else %}
+            <img src="{% static 'project-image.png' %}" alt="{{ project.display_title }}" class="h-full w-full object-cover opacity-60" data-project-gallery-main>
+          {% endif %}
+        </div>
+        <div class="mt-2 flex h-16 gap-1.5 overflow-x-auto sm:h-20" data-project-gallery-track>
+          {% for gallery_image in gallery_images %}
+            <button type="button" class="relative min-w-24 flex-1 overflow-hidden rounded-sm bg-[#666] ring-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#fdb515] {% if forloop.first %}ring-3 ring-[#fdb515]{% endif %}" data-project-thumbnail data-src="{{ gallery_image.image.url }}" data-alt="{{ gallery_image.display_alt_text }}" aria-label="{% blocktranslate with counter=forloop.counter %}نمایش تصویر {{ counter }}{% endblocktranslate %}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}">
+              <img src="{{ gallery_image.image.url }}" alt="" class="h-full w-full object-cover" loading="lazy">
+            </button>
+          {% empty %}
+            {% if project.main_image %}
+              <button type="button" class="relative min-w-24 flex-1 overflow-hidden rounded-sm ring-3 ring-[#fdb515] ring-inset" data-project-thumbnail data-src="{{ project.main_image.url }}" data-alt="{{ project.display_title }}" aria-pressed="true">
+                <img src="{{ project.main_image.url }}" alt="" class="h-full w-full object-cover">
+              </button>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <section class="mt-16" aria-labelledby="project-features-title">
+      <h2 id="project-features-title" class="text-2xl font-bold text-slate-950">{% translate "ویژگی‌های پروژه" %}</h2>
+      <div class="mt-7 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+        {% for feature in project.features.all %}
+          <article class="flex min-h-36 items-center justify-center rounded-sm bg-[#e5e5e5] px-4 py-6 text-center sm:min-h-44">
+            <h3 class="text-base font-bold leading-7 text-slate-950 sm:text-lg">{{ feature.display_title }}</h3>
+          </article>
+        {% empty %}
+          <p class="col-span-full text-sm text-slate-500">{% translate "ویژگی‌ای برای این پروژه ثبت نشده است." %}</p>
+        {% endfor %}
+      </div>
+    </section>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  (() => {
+    document.querySelectorAll('[data-project-gallery]').forEach((gallery) => {
+      const mainImage = gallery.querySelector('[data-project-gallery-main]');
+      const thumbnails = [...gallery.querySelectorAll('[data-project-thumbnail]')];
+      thumbnails.forEach((thumbnail) => {
+        thumbnail.addEventListener('click', () => {
+          if (!mainImage) return;
+          mainImage.classList.add('opacity-0');
+          window.setTimeout(() => {
+            mainImage.src = thumbnail.dataset.src;
+            mainImage.alt = thumbnail.dataset.alt;
+            mainImage.classList.remove('opacity-0');
+          }, 120);
+          thumbnails.forEach((item) => {
+            const active = item === thumbnail;
+            item.setAttribute('aria-pressed', String(active));
+            item.classList.toggle('ring-3', active);
+            item.classList.toggle('ring-[#fdb515]', active);
+          });
+        });
+      });
+    });
+  })();
+</script>
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{% translate "تیم وزنه" %}{% endblock %}
+
+{% block content %}
+<section
+    class="relative isolate min-h-[640px] overflow-hidden bg-slate-950 lg:min-h-[clamp(640px,40vw,820px)]"
+    aria-labelledby="team-hero-title"
+>
+    <div
+        class="absolute inset-0 -z-20 bg-[url('/static/team-header.png')] bg-cover bg-center"
+        aria-hidden="true"
+    ></div>
+    <div
+        class="absolute inset-0 -z-10 {% if LANGUAGE_BIDI %}bg-[linear-gradient(90deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.2)_42%,rgba(0,0,0,0.58)_100%)]{% else %}bg-[linear-gradient(270deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.2)_42%,rgba(0,0,0,0.58)_100%)]{% endif %}"
+        aria-hidden="true"
+    ></div>
+
+    <div class="mx-auto flex min-h-[640px] w-full max-w-[1720px] items-center px-6 pb-28 pt-20 sm:px-10 lg:min-h-[clamp(640px,40vw,820px)] lg:pb-20 lg:pl-24 lg:pr-12 lg:pt-14 xl:pl-32 xl:pr-16 2xl:pr-8">
+        <div class="me-auto w-full max-w-[820px] text-start text-white lg:w-[55%]">
+            <h1
+                id="team-hero-title"
+                class="text-[clamp(2.5rem,4.5vw,4.75rem)] font-bold leading-[1.45] tracking-[-0.045em] drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]"
+            >
+                {% translate "تیم وزنه با هر چالشی" %}<br class="hidden sm:block">
+                {% translate "با روحیه‌ی بالا" %}<br class="hidden sm:block">
+                {% translate "مواجه می‌شود." %}
+            </h1>
+        </div>
+    </div>
+
+    <a
+        href="#team-content"
+        class="absolute bottom-7 left-1/2 -translate-x-1/2 rounded-full p-2 transition hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-400"
+        aria-label="{% translate 'رفتن به محتوای تیم وزنه' %}"
+    >
+        <img src="{% static 'icons/mouse-down-icon.svg' %}" alt="" class="scroll-cue-down h-14 w-10">
+    </a>
+</section>
+
+<section id="team-content" class="bg-[#f8f8f8] px-4 py-14 sm:px-6 sm:py-16 lg:px-0 lg:pb-32 lg:pt-20" aria-labelledby="team-section-title">
+    <div class="mx-auto w-full lg:w-4/5">
+        <h2 id="team-section-title" class="mb-10 text-start text-[clamp(2rem,3vw,3.25rem)] font-bold leading-tight text-slate-950 sm:mb-12">
+            {% translate "تیم وزنه" %}
+        </h2>
+
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8 xl:gap-10">
+            <article class="group relative aspect-square overflow-hidden rounded-sm bg-slate-900">
+                <img src="{% static 'team-img.png' %}" alt="{% translate 'عضو تیم وزنه' %}" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none" loading="lazy">
+                <div class="absolute inset-x-0 bottom-0 bg-[#003577]/75 px-5 py-5 text-start text-white backdrop-blur-[1px] sm:px-6 sm:py-6">
+                    <h3 class="text-lg font-bold sm:text-xl">{% translate "نام و نام خانوادگی" %}</h3>
+                    <p class="mt-2 text-base text-white/90 sm:text-lg">{% translate "سمت سازمانی" %}</p>
+                </div>
+            </article>
+
+            <article class="group relative aspect-square overflow-hidden rounded-sm bg-slate-900">
+                <img src="{% static 'team-img.png' %}" alt="{% translate 'عضو تیم وزنه' %}" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none" loading="lazy">
+                <div class="absolute inset-x-0 bottom-0 bg-[#003577]/75 px-5 py-5 text-start text-white backdrop-blur-[1px] sm:px-6 sm:py-6">
+                    <h3 class="text-lg font-bold sm:text-xl">{% translate "نام و نام خانوادگی" %}</h3>
+                    <p class="mt-2 text-base text-white/90 sm:text-lg">{% translate "سمت سازمانی" %}</p>
+                </div>
+            </article>
+
+            <article class="group relative aspect-square overflow-hidden rounded-sm bg-slate-900">
+                <img src="{% static 'team-img.png' %}" alt="{% translate 'عضو تیم وزنه' %}" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none" loading="lazy">
+                <div class="absolute inset-x-0 bottom-0 bg-[#003577]/75 px-5 py-5 text-start text-white backdrop-blur-[1px] sm:px-6 sm:py-6">
+                    <h3 class="text-lg font-bold sm:text-xl">{% translate "نام و نام خانوادگی" %}</h3>
+                    <p class="mt-2 text-base text-white/90 sm:text-lg">{% translate "سمت سازمانی" %}</p>
+                </div>
+            </article>
+
+            <article class="group relative aspect-square overflow-hidden rounded-sm bg-slate-900">
+                <img src="{% static 'team-img.png' %}" alt="{% translate 'عضو تیم وزنه' %}" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none" loading="lazy">
+                <div class="absolute inset-x-0 bottom-0 bg-[#003577]/75 px-5 py-5 text-start text-white backdrop-blur-[1px] sm:px-6 sm:py-6">
+                    <h3 class="text-lg font-bold sm:text-xl">{% translate "نام و نام خانوادگی" %}</h3>
+                    <p class="mt-2 text-base text-white/90 sm:text-lg">{% translate "سمت سازمانی" %}</p>
+                </div>
+            </article>
+
+            <article class="group relative aspect-square overflow-hidden rounded-sm bg-slate-900">
+                <img src="{% static 'team-img.png' %}" alt="{% translate 'عضو تیم وزنه' %}" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none" loading="lazy">
+                <div class="absolute inset-x-0 bottom-0 bg-[#003577]/75 px-5 py-5 text-start text-white backdrop-blur-[1px] sm:px-6 sm:py-6">
+                    <h3 class="text-lg font-bold sm:text-xl">{% translate "نام و نام خانوادگی" %}</h3>
+                    <p class="mt-2 text-base text-white/90 sm:text-lg">{% translate "سمت سازمانی" %}</p>
+                </div>
+            </article>
+
+            <article class="group relative aspect-square overflow-hidden rounded-sm bg-slate-900">
+                <img src="{% static 'team-img.png' %}" alt="{% translate 'عضو تیم وزنه' %}" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none" loading="lazy">
+                <div class="absolute inset-x-0 bottom-0 bg-[#003577]/75 px-5 py-5 text-start text-white backdrop-blur-[1px] sm:px-6 sm:py-6">
+                    <h3 class="text-lg font-bold sm:text-xl">{% translate "نام و نام خانوادگی" %}</h3>
+                    <p class="mt-2 text-base text-white/90 sm:text-lg">{% translate "سمت سازمانی" %}</p>
+                </div>
+            </article>
+        </div>
+
+        <a href="{% url 'main:hiring' %}" class="group relative mx-auto mt-12 flex min-h-14 w-full max-w-sm items-center justify-center rounded-md bg-[#fdb515] px-12 py-3 text-base font-bold text-slate-950 transition duration-300 hover:-translate-y-1 hover:bg-[#ffca45] hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#003577] active:translate-y-0 sm:mt-16">
+            <span class="text-center">{% translate "به تیم وزنه ملحق شوید" %}</span>
+            <img src="{% static 'icons/arrow-left-black.svg' %}" alt="" class="absolute start-5 h-5 w-7 transition-transform duration-300 group-hover:-translate-x-1 {% if not LANGUAGE_BIDI %}rotate-180{% endif %}">
+        </a>
+    </div>
+</section>
+
+<section
+    class="relative min-h-[560px] overflow-hidden bg-[#d4d7db] bg-[url('/static/boss-image.jpeg')] bg-cover bg-[position:32%_center] sm:min-h-[520px] lg:min-h-[500px] lg:bg-center"
+    aria-labelledby="boss-quote"
+>
+    <div class="absolute inset-0 bg-gradient-to-l from-white/90 via-white/65 to-transparent sm:from-white/75 sm:via-white/30 lg:from-transparent lg:via-transparent" aria-hidden="true"></div>
+
+    <div class="relative mx-auto flex min-h-[560px] w-full items-start justify-start px-5 pb-28 pt-12 sm:min-h-[520px] sm:px-8 sm:pt-16 lg:min-h-[500px] lg:w-4/5 lg:items-center lg:px-0 lg:pb-24 lg:pt-8">
+        <div class="grid w-full max-w-3xl grid-cols-1 items-center gap-8 text-start sm:w-[72%] lg:w-[58%] lg:max-w-none xl:grid-cols-[110px_minmax(0,1fr)]" dir="{% if LANGUAGE_BIDI %}ltr{% else %}rtl{% endif %}">
+            <img src="{% static 'icons/quote-icon.svg' %}" alt="" class="hidden w-24 justify-self-center xl:block" aria-hidden="true">
+
+            <blockquote dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">
+                <p id="boss-quote" class="text-[clamp(1.45rem,2.6vw,2.75rem)] font-medium leading-[1.75] text-slate-950">
+                    {% translate "مفتخریم که اهرم نیرومندی هستیم" %}<br class="hidden xl:block">
+                    {% translate "برای بالابردن استانداردهای کاری" %}<br class="hidden xl:block">
+                    {% translate "مشتریان‌مان در صنایع گوناگون." %}
+                </p>
+                <footer class="mt-6 text-lg font-bold leading-8 text-slate-900 sm:text-xl">
+                    {% translate "مهندس قادری" %}<br>
+                    <span class="font-medium">{% translate "مدیرعامل شرکت وزنه" %}</span>
+                </footer>
+            </blockquote>
+        </div>
+    </div>
+</section>
+{% endblock %}

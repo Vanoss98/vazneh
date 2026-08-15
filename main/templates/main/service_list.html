@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% translate "خدمات وزنه" %}{% endblock %}
+{% block meta_description %}{% translate "خدمات مهندسی، ساخت، نصب، نگهداری و مشاوره شرکت وزنه" %}{% endblock %}
+
+{% block content %}
+<section class="relative isolate min-h-[360px] overflow-hidden bg-slate-950 sm:min-h-[440px] lg:min-h-[520px]" aria-labelledby="services-hero-title">
+  <img src="{% static 'main-page-header.jpg' %}" alt="" class="absolute inset-0 -z-20 h-full w-full object-cover" aria-hidden="true">
+  <div class="absolute inset-0 -z-10 {% if LANGUAGE_BIDI %}bg-[linear-gradient(90deg,rgba(0,0,0,.12)_0%,rgba(0,0,0,.28)_42%,rgba(0,0,0,.72)_100%)]{% else %}bg-[linear-gradient(270deg,rgba(0,0,0,.12)_0%,rgba(0,0,0,.28)_42%,rgba(0,0,0,.72)_100%)]{% endif %}" aria-hidden="true"></div>
+  <div class="mx-auto flex min-h-[360px] w-full items-center px-5 py-16 sm:min-h-[440px] sm:px-8 lg:min-h-[520px] lg:w-4/5 lg:px-0">
+    <div class="me-auto max-w-3xl text-start text-white">
+      <h1 id="services-hero-title" class="text-[clamp(2.5rem,4.8vw,5rem)] font-bold leading-tight drop-shadow-[0_4px_14px_rgba(0,0,0,.65)]">{% translate "خدمات وزنه" %}</h1>
+      <p class="mt-5 max-w-2xl text-[clamp(1.05rem,1.7vw,1.55rem)] font-medium leading-9 text-white/90">{% translate "از نخستین تصمیم مهندسی تا سال‌ها پس از راه‌اندازی، کنار صنعت می‌مانیم." %}</p>
+    </div>
+  </div>
+</section>
+
+<section class="bg-[#fafafa] px-4 pb-40 pt-14 sm:px-6 sm:pt-16 lg:px-0 lg:pb-48 lg:pt-20" aria-labelledby="services-list-title">
+  <div class="mx-auto w-full lg:w-4/5">
+    <div class="grid grid-cols-1 gap-8 border-b border-slate-300 pb-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.45fr)] lg:items-end lg:gap-16">
+      <h2 id="services-list-title" class="text-[clamp(2rem,3.5vw,3.75rem)] font-bold leading-tight text-[#003577]">{% translate "راهکار کامل برای" %}<br class="hidden sm:block"> {% translate "حرکت مطمئن صنعت" %}</h2>
+      <p class="max-w-3xl text-base font-medium leading-[2] text-slate-700 sm:text-lg">{% translate "خدمات وزنه برای کاهش ریسک، افزایش ایمنی و حفظ بهره‌وری طراحی شده‌اند. هر خدمت با شناخت دقیق نیاز کارخانه آغاز می‌شود و با مستندات شفاف و پشتیبانی تخصصی ادامه پیدا می‌کند." %}</p>
+    </div>
+
+    <div class="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3 lg:gap-6">
+      {% for service in services %}
+        {% include "main/_service_card.html" with service=service %}
+      {% empty %}
+        <p class="col-span-full rounded-sm border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-slate-600">{% translate "خدمتی برای نمایش ثبت نشده است." %}</p>
+      {% endfor %}
+    </div>
+
+    <div class="mt-16 grid overflow-hidden rounded-sm bg-[#003577] lg:grid-cols-[minmax(0,1.45fr)_minmax(18rem,.55fr)]">
+      <div class="px-6 py-10 text-start text-white sm:px-10 lg:px-12">
+        <h2 class="text-2xl font-bold sm:text-3xl">{% translate "برای انتخاب خدمت مناسب مطمئن نیستید؟" %}</h2>
+        <p class="mt-4 max-w-3xl text-sm leading-8 text-white/80 sm:text-base">{% translate "مسئله و شرایط کاری خود را با کارشناسان وزنه در میان بگذارید تا مسیر فنی مناسب را پیشنهاد کنیم." %}</p>
+      </div>
+      <div class="flex items-center justify-center bg-[#fdb515] p-6">
+        <a href="{% url 'main:contact' %}" class="group relative flex min-h-14 w-full max-w-xs items-center justify-center rounded-sm border-2 border-slate-950 px-12 py-3 text-base font-bold text-slate-950 transition hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+          <span>{% translate "درخواست مشاوره" %}</span>
+          <img src="{% static 'icons/arrow-left-black.svg' %}" alt="" class="absolute end-5 h-5 w-7 transition-transform group-hover:-translate-x-1 {% if not LANGUAGE_BIDI %}rotate-180{% endif %}">
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

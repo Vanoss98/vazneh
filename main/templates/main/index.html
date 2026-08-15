@@ -1,0 +1,727 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}وزنه | توان جابجایی{% endblock %}
+
+{% block content %}
+<section
+    id="home-hero"
+    class="relative isolate min-h-[640px] overflow-hidden bg-slate-950 lg:min-h-[clamp(640px,40vw,820px)]"
+    aria-roledescription="carousel"
+    aria-label="معرفی خدمات وزنه"
+    dir="rtl"
+>
+    <div
+        id="hero-background"
+        class="absolute inset-0 -z-20 bg-[url('/static/main-page-header.jpg')] bg-cover bg-center transition-opacity duration-500 motion-reduce:transition-none"
+        aria-hidden="true"
+    ></div>
+    <div
+        class="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.28)_42%,rgba(0,0,0,0.52)_100%)]"
+        aria-hidden="true"
+    ></div>
+
+    <div class="mx-auto flex min-h-[640px] w-full max-w-[1720px] items-center px-6 pb-36 pt-20 sm:px-10 lg:min-h-[clamp(640px,40vw,820px)] lg:pb-24 lg:pl-24 lg:pr-12 lg:pt-14 xl:pl-32 xl:pr-16 2xl:pr-8">
+        <div
+            id="hero-copy"
+            class="ml-auto w-full max-w-[760px] text-right text-white transition-all duration-500 motion-reduce:transition-none lg:w-[52%]"
+            aria-live="polite"
+            aria-atomic="true"
+        >
+            <h1
+                id="hero-title"
+                class="text-[clamp(2.25rem,3.6vw,3.75rem)] font-bold leading-[1.3] tracking-[-0.045em] drop-shadow-[0_4px_12px_rgba(0,0,0,0.55)]"
+            >
+                توان جابجایی<br class="hidden sm:block">
+                آنچه مهم است.
+            </h1>
+            <p
+                id="hero-subtitle"
+                class="mt-6 max-w-[760px] text-[clamp(1.05rem,2.1vw,2rem)] font-medium leading-[1.8] text-white/95 drop-shadow-[0_2px_8px_rgba(0,0,0,0.65)] lg:mt-8"
+            >
+                جرثقیل‌های پرتوان برای بالابردن روحیه‌ی کاری شما
+            </p>
+            <a
+                href="{% url 'main:about' %}"
+                class="mt-9 inline-flex min-h-14 min-w-48 items-center justify-center rounded-md border-2 border-amber-400 bg-blue-950/40 px-8 py-3 text-lg font-bold text-white backdrop-blur-[2px] transition duration-300 hover:bg-blue-900/65 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-400 active:scale-[0.98] lg:mt-12 lg:min-w-72"
+            >
+                بیشتر بدانید
+            </a>
+        </div>
+    </div>
+
+    <div
+        class="absolute bottom-7 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3 lg:bottom-auto lg:left-[clamp(2rem,4.5vw,5.75rem)] lg:top-1/2 lg:translate-x-0 lg:-translate-y-1/2 lg:flex-row"
+        aria-label="کنترل اسلایدر"
+        dir="ltr"
+    >
+        <div id="hero-bars" class="flex items-center gap-2 lg:h-60 lg:flex-col lg:justify-between lg:gap-1.5">
+            <button
+                type="button"
+                class="h-1 w-9 rounded-full bg-white/85 transition-colors duration-300 data-[active=true]:bg-amber-400 lg:h-[4.65rem] lg:w-1"
+                data-slide-index="0"
+                data-active="true"
+                aria-label="رفتن به اسلاید ۱"
+            ></button>
+            <button
+                type="button"
+                class="h-1 w-9 rounded-full bg-white/85 transition-colors duration-300 data-[active=true]:bg-amber-400 lg:h-[4.65rem] lg:w-1"
+                data-slide-index="1"
+                data-active="false"
+                aria-label="رفتن به اسلاید ۲"
+            ></button>
+            <button
+                type="button"
+                class="h-1 w-9 rounded-full bg-white/85 transition-colors duration-300 data-[active=true]:bg-amber-400 lg:h-[4.65rem] lg:w-1"
+                data-slide-index="2"
+                data-active="false"
+                aria-label="رفتن به اسلاید ۳"
+            ></button>
+        </div>
+
+        <div class="flex h-16 items-center overflow-hidden rounded-md bg-white/90 text-blue-950 shadow-2xl backdrop-blur-md lg:h-60 lg:w-20 lg:flex-col">
+            <button
+                id="hero-previous"
+                type="button"
+                class="grid h-16 w-16 shrink-0 place-items-center transition hover:bg-amber-400/20 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-amber-400 lg:h-20 lg:w-20"
+                aria-label="اسلاید قبلی"
+            >
+                <img src="{% static 'icons/arrow-up-blue.svg' %}" alt="" class="h-8 w-8 lg:h-10 lg:w-10">
+            </button>
+
+            <div
+                id="hero-pagination"
+                class="grid h-16 min-w-16 place-items-center border-x border-blue-950/10 px-4 text-xl font-bold tabular-nums lg:h-20 lg:w-20 lg:border-x-0 lg:border-y"
+                aria-label="اسلاید ۱ از ۳"
+            >
+                ۱/۳
+            </div>
+
+            <button
+                id="hero-next"
+                type="button"
+                class="grid h-16 w-16 shrink-0 place-items-center transition hover:bg-amber-400/20 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-amber-400 lg:h-20 lg:w-20"
+                aria-label="اسلاید بعدی"
+            >
+                <img src="{% static 'icons/arrow-down-blue.svg' %}" alt="" class="h-8 w-8 lg:h-10 lg:w-10">
+            </button>
+        </div>
+    </div>
+
+    <a
+        href="#next-section"
+        class="absolute bottom-7 left-1/2 hidden -translate-x-1/2 rounded-full p-2 transition hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-400 lg:block"
+        aria-label="رفتن به بخش بعدی"
+    >
+        <img src="{% static 'icons/mouse-down-icon.svg' %}" alt="" class="scroll-cue-down h-14 w-10">
+    </a>
+</section>
+
+<section id="next-section" class="bg-[#f8f8f8] px-4 py-10 sm:px-6 sm:py-12 lg:px-0 lg:py-14" dir="rtl">
+    <div class="mx-auto w-full lg:w-4/5">
+        <div class="grid grid-cols-1 items-end gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-10">
+            <figure class="flex items-end justify-center">
+                <img
+                    src="{% static 'home-image22.png' %}"
+                    alt="جرثقیل‌های نیرومند وزنه، برای کسب‌وکارهای توانمند، از سال ۱۳۴۰"
+                    class="h-auto w-full max-w-[480px] object-contain"
+                    loading="lazy"
+                >
+            </figure>
+
+            <figure class="flex items-end justify-center">
+                <img
+                    src="{% static 'home-image11.png' %}"
+                    alt="جرثقیل صنعتی دروازه‌ای شرکت وزنه"
+                    class="h-auto w-full max-w-[540px] object-contain"
+                    loading="lazy"
+                >
+            </figure>
+        </div>
+
+        <nav class="mt-7 grid grid-cols-1 gap-3 sm:mt-9 lg:grid-cols-3 lg:gap-8 xl:gap-10" aria-label="دسترسی سریع خدمات وزنه">
+            <a
+                href="{% url 'main:about' %}"
+                class="group relative flex min-h-14 w-full items-center justify-center justify-self-center rounded-md bg-[#fdb515] px-12 py-3 text-base font-semibold text-slate-950 transition duration-300 hover:-translate-y-1 hover:bg-[#ffca45] hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#003577] active:translate-y-0 lg:max-w-[320px]"
+            >
+                <span class="w-full text-center">بیشتر بدانید</span>
+                <img
+                    src="{% static 'icons/arrow-left-black.svg' %}"
+                    alt=""
+                    class="absolute left-5 h-5 w-7 shrink-0 transition-transform duration-300 group-hover:-translate-x-1"
+                >
+            </a>
+
+            <a
+                href="{% url 'main:contact' %}"
+                class="group relative flex min-h-14 w-full items-center justify-center justify-self-center rounded-md bg-[#fdb515] px-12 py-3 text-base font-semibold text-slate-950 transition duration-300 hover:-translate-y-1 hover:bg-[#ffca45] hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#003577] active:translate-y-0 lg:max-w-[320px]"
+            >
+                <span class="w-full text-center">سفارش دهید</span>
+                <img
+                    src="{% static 'icons/arrow-left-black.svg' %}"
+                    alt=""
+                    class="absolute left-5 h-5 w-7 shrink-0 transition-transform duration-300 group-hover:-translate-x-1"
+                >
+            </a>
+
+            <a
+                href="#"
+                class="group relative flex min-h-14 w-full items-center justify-center justify-self-center rounded-md bg-[#003577] px-12 py-3 text-base font-semibold text-[#fdb515] transition duration-300 hover:-translate-y-1 hover:bg-[#002b61] hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#fdb515] active:translate-y-0 lg:max-w-[320px]"
+            >
+                <span class="w-full text-center">دانلود کاتالوگ</span>
+                <img
+                    src="{% static 'icons/pdf-icon.svg' %}"
+                    alt=""
+                    class="absolute left-5 h-6 w-6 shrink-0 transition-transform duration-300 group-hover:-translate-y-1"
+                >
+            </a>
+        </nav>
+    </div>
+</section>
+
+<section class="grid grid-cols-1 gap-[5px] bg-white lg:grid-cols-3" dir="rtl" aria-label="خدمات وزنه">
+    <article
+        class="group relative aspect-[5/6] overflow-hidden rounded-[6px] bg-slate-900 focus:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-[#fdb515]"
+        tabindex="0"
+    >
+        <img
+            src="{% static 'home-service1.jpg' %}"
+            alt="جرثقیل سقفی در سالن صنعتی وزنه"
+            class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 group-focus:scale-105 motion-reduce:transition-none"
+            loading="lazy"
+        >
+        <div class="absolute inset-x-0 bottom-0 h-[28%] overflow-hidden bg-[#003577]/65 text-white backdrop-blur-[1px] transition-[height,background-color] duration-500 ease-out group-hover:h-full group-hover:bg-[#003577]/82 group-focus:h-full group-focus:bg-[#003577]/82 group-focus-within:h-full group-focus-within:bg-[#003577]/82 motion-reduce:transition-none">
+            <div class="relative flex h-full flex-col items-center justify-center px-6 pb-20 pt-8 text-center sm:px-10">
+                <div class="flex flex-col items-center justify-center">
+                    <h2 class="text-[clamp(1.75rem,2.7vw,3rem)] font-bold leading-tight">
+                        جرثقیل
+                    </h2>
+                    <p class="mt-0 max-h-0 max-w-md translate-y-3 overflow-hidden text-base leading-8 text-white/95 opacity-0 transition-all duration-400 group-hover:mt-5 group-hover:max-h-40 group-hover:translate-y-0 group-hover:opacity-100 group-focus:mt-5 group-focus:max-h-40 group-focus:translate-y-0 group-focus:opacity-100 group-focus-within:mt-5 group-focus-within:max-h-40 group-focus-within:translate-y-0 group-focus-within:opacity-100 sm:text-lg">
+                        طراحی و ساخت جرثقیل‌های صنعتی قدرتمند، ایمن و متناسب با نیاز کسب‌وکار شما
+                    </p>
+                </div>
+                <a
+                    href="{% url 'main:product-list' %}"
+                    class="pointer-events-none absolute bottom-8 left-1/2 flex min-h-12 w-[70%] -translate-x-1/2 translate-y-4 items-center justify-center rounded-md bg-[#fdb515] px-12 py-3 text-base font-bold text-slate-950 opacity-0 transition duration-300 hover:bg-[#ffca45] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 group-focus:pointer-events-auto group-focus:translate-y-0 group-focus:opacity-100 group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100"
+                >
+                    <span>ببینید</span>
+                    <img src="{% static 'icons/arrow-left-black.svg' %}" alt="" class="absolute left-5 h-5 w-7">
+                </a>
+            </div>
+        </div>
+    </article>
+
+    <article
+        class="group relative aspect-[5/6] overflow-hidden rounded-[6px] bg-slate-900 focus:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-[#fdb515]"
+        tabindex="0"
+    >
+        <img
+            src="{% static 'home-service2.jpg' %}"
+            alt="کارشناس خدمات جرثقیل در حال بازرسی قلاب بالابر"
+            class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 group-focus:scale-105 motion-reduce:transition-none"
+            loading="lazy"
+        >
+        <div class="absolute inset-x-0 bottom-0 h-[28%] overflow-hidden bg-[#003577]/65 text-white backdrop-blur-[1px] transition-[height,background-color] duration-500 ease-out group-hover:h-full group-hover:bg-[#003577]/82 group-focus:h-full group-focus:bg-[#003577]/82 group-focus-within:h-full group-focus-within:bg-[#003577]/82 motion-reduce:transition-none">
+            <div class="relative flex h-full flex-col items-center justify-center px-6 pb-20 pt-8 text-center sm:px-10">
+                <div class="flex flex-col items-center justify-center">
+                    <h2 class="text-[clamp(1.75rem,2.7vw,3rem)] font-bold leading-tight">
+                        خدمات
+                    </h2>
+                    <p class="mt-0 max-h-0 max-w-md translate-y-3 overflow-hidden text-base leading-8 text-white/95 opacity-0 transition-all duration-400 group-hover:mt-5 group-hover:max-h-40 group-hover:translate-y-0 group-hover:opacity-100 group-focus:mt-5 group-focus:max-h-40 group-focus:translate-y-0 group-focus:opacity-100 group-focus-within:mt-5 group-focus-within:max-h-40 group-focus-within:translate-y-0 group-focus-within:opacity-100 sm:text-lg">
+                        خدمات تخصصی نصب، راه‌اندازی، تعمیر و نگهداری برای عملکرد مطمئن تجهیزات شما
+                    </p>
+                </div>
+                <a
+                    href="{% url 'main:service-list' %}"
+                    class="pointer-events-none absolute bottom-8 left-1/2 flex min-h-12 w-[70%] -translate-x-1/2 translate-y-4 items-center justify-center rounded-md bg-[#fdb515] px-12 py-3 text-base font-bold text-slate-950 opacity-0 transition duration-300 hover:bg-[#ffca45] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 group-focus:pointer-events-auto group-focus:translate-y-0 group-focus:opacity-100 group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100"
+                >
+                    <span>ببینید</span>
+                    <img src="{% static 'icons/arrow-left-black.svg' %}" alt="" class="absolute left-5 h-5 w-7">
+                </a>
+            </div>
+        </div>
+    </article>
+
+    <article
+        class="group relative aspect-[5/6] overflow-hidden rounded-[6px] bg-slate-900 focus:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-[#fdb515]"
+        tabindex="0"
+    >
+        <img
+            src="{% static 'home-service3.jpg' %}"
+            alt="قلاب و زنجیر جرثقیل در محیط صنعتی"
+            class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 group-focus:scale-105 motion-reduce:transition-none"
+            loading="lazy"
+        >
+        <div class="absolute inset-x-0 bottom-0 h-[28%] overflow-hidden bg-[#003577]/65 text-white backdrop-blur-[1px] transition-[height,background-color] duration-500 ease-out group-hover:h-full group-hover:bg-[#003577]/82 group-focus:h-full group-focus:bg-[#003577]/82 group-focus-within:h-full group-focus-within:bg-[#003577]/82 motion-reduce:transition-none">
+            <div class="relative flex h-full flex-col items-center justify-center px-6 pb-20 pt-8 text-center sm:px-10">
+                <div class="flex flex-col items-center justify-center">
+                    <h2 class="text-[clamp(1.75rem,2.7vw,3rem)] font-bold leading-tight">
+                        لوازم و قطعات یدکی
+                    </h2>
+                    <p class="mt-0 max-h-0 max-w-md translate-y-3 overflow-hidden text-base leading-8 text-white/95 opacity-0 transition-all duration-400 group-hover:mt-5 group-hover:max-h-40 group-hover:translate-y-0 group-hover:opacity-100 group-focus:mt-5 group-focus:max-h-40 group-focus:translate-y-0 group-focus:opacity-100 group-focus-within:mt-5 group-focus-within:max-h-40 group-focus-within:translate-y-0 group-focus-within:opacity-100 sm:text-lg">
+                        قطعات یدکی و لوازم جانبی برای حفظ کارکرد دستگاه‌های بالابر
+                    </p>
+                </div>
+                <a
+                    href="{% url 'main:service-detail' 'spare-parts' %}"
+                    class="pointer-events-none absolute bottom-8 left-1/2 flex min-h-12 w-[70%] -translate-x-1/2 translate-y-4 items-center justify-center rounded-md bg-[#fdb515] px-12 py-3 text-base font-bold text-slate-950 opacity-0 transition duration-300 hover:bg-[#ffca45] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 group-focus:pointer-events-auto group-focus:translate-y-0 group-focus:opacity-100 group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100"
+                >
+                    <span>ببینید</span>
+                    <img src="{% static 'icons/arrow-left-black.svg' %}" alt="" class="absolute left-5 h-5 w-7">
+                </a>
+            </div>
+        </div>
+    </article>
+</section>
+
+<section id="home-statistics" class="bg-[#f8f8f8] px-4 py-20 sm:px-6 sm:py-24 lg:px-0 lg:py-28" dir="rtl" aria-labelledby="statistics-title">
+    <div class="mx-auto w-full lg:w-4/5">
+        <h2 id="statistics-title" class="text-center text-[clamp(2rem,4vw,4rem)] font-bold leading-tight text-[#003577]">
+            قهرمان همه‌ی وزن‌ها
+        </h2>
+
+        <div class="mt-14 grid grid-cols-2 lg:mt-20 lg:grid-cols-4">
+            <div class="flex min-h-44 flex-col items-center justify-center border-l border-[#003577]/60 px-4 py-7 text-center lg:min-h-56" aria-label="۶۴ سال تجربه">
+                <strong class="stat-counter text-[clamp(3.2rem,6vw,6rem)] font-normal leading-none text-[#fdb515]" data-target="64" aria-hidden="true">۶۴</strong>
+                <p class="mt-5 text-[clamp(1.15rem,2vw,2rem)] font-bold leading-relaxed text-[#003577]">
+                    سال<br>تجربه
+                </p>
+            </div>
+
+            <div class="flex min-h-44 flex-col items-center justify-center px-4 py-7 text-center lg:min-h-56 lg:border-l lg:border-[#003577]/60" aria-label="۲۳۵ مشتری راضی">
+                <strong class="stat-counter text-[clamp(3.2rem,6vw,6rem)] font-normal leading-none text-[#fdb515]" data-target="235" aria-hidden="true">۲۳۵</strong>
+                <p class="mt-5 text-[clamp(1.15rem,2vw,2rem)] font-bold leading-relaxed text-[#003577]">
+                    مشتری<br>راضی
+                </p>
+            </div>
+
+            <div class="flex min-h-44 flex-col items-center justify-center border-l border-t border-[#003577]/60 px-4 py-7 text-center lg:min-h-56 lg:border-t-0" aria-label="۶۵۸۹ محصول نصب‌شده">
+                <strong class="stat-counter text-[clamp(3.2rem,6vw,6rem)] font-normal leading-none text-[#fdb515]" data-target="6589" aria-hidden="true">۶۵۸۹</strong>
+                <p class="mt-5 text-[clamp(1.15rem,2vw,2rem)] font-bold leading-relaxed text-[#003577]">
+                    محصول<br>نصب شده
+                </p>
+            </div>
+
+            <div class="flex min-h-44 flex-col items-center justify-center border-t border-[#003577]/60 px-4 py-7 text-center lg:min-h-56 lg:border-t-0" aria-label="۸ مارک کیفی و غیر اصل">
+                <strong class="stat-counter text-[clamp(3.2rem,6vw,6rem)] font-normal leading-none text-[#fdb515]" data-target="8" aria-hidden="true">۸</strong>
+                <p class="mt-5 text-[clamp(1.15rem,2vw,2rem)] font-bold leading-relaxed text-[#003577]">
+                    مارک کیفی<br>و غیر اصل!
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="bg-[#003577] px-4 py-16 sm:px-6 sm:py-20 lg:px-0 lg:py-24" dir="rtl" aria-labelledby="video-section-title">
+    <div class="mx-auto grid w-full grid-cols-1 items-center gap-10 lg:w-4/5 lg:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] lg:gap-10 xl:gap-14">
+        <div class="text-center lg:text-right">
+            <h2 id="video-section-title" class="text-[clamp(1.75rem,2.6vw,2.75rem)] font-bold leading-tight text-[#fdb515]">
+                وزنه چطور کار می‌کند؟
+            </h2>
+            <p class="mx-auto mt-5 max-w-2xl text-[clamp(1rem,1.3vw,1.35rem)] font-medium leading-[1.9] text-white lg:mx-0 lg:mt-6">
+                مراحل طراحی و ساخت یک جرثقیل<br class="hidden xl:block">
+                سفارشی برای کارخانه‌ی خودتان را ببینید.
+            </p>
+        </div>
+
+        <div class="w-full overflow-hidden rounded-sm bg-black shadow-2xl shadow-black/20">
+            <video
+                class="aspect-video h-auto w-full object-cover"
+                controls
+                preload="none"
+                playsinline
+                poster="{% static 'home-video-thumbnail.jpg' %}"
+                aria-label="ویدئوی مراحل طراحی و ساخت جرثقیل سفارشی وزنه"
+            >
+                مرورگر شما از پخش ویدئو پشتیبانی نمی‌کند.
+            </video>
+        </div>
+    </div>
+</section>
+
+<section
+    id="home-testimonials"
+    class="overflow-hidden bg-[#f8f8f8] px-4 pb-28 pt-16 sm:px-6 sm:pb-32 sm:pt-20 lg:px-0 lg:pb-40 lg:pt-24"
+    aria-label="نظر مشتریان وزنه"
+>
+    <div class="mx-auto w-full lg:w-4/5">
+        <div
+            id="testimonial-tabs"
+            class="grid snap-x snap-mandatory grid-flow-col auto-cols-[calc(33.333%_-_0.35rem)] gap-2 overflow-x-auto px-0 pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid-flow-row md:grid-cols-6 md:auto-cols-auto md:gap-4 md:overflow-visible md:pb-8"
+            role="tablist"
+            aria-label="انتخاب مشتری"
+        >
+            <button
+                id="testimonial-tab-1"
+                type="button"
+                class="relative flex min-h-20 snap-start items-center justify-center rounded-md bg-[#8d8d8d] px-2 py-3 text-center text-[clamp(.72rem,2.7vw,.9rem)] font-medium leading-tight text-white transition duration-300 after:absolute after:left-1/2 after:top-full after:hidden after:-translate-x-1/2 after:border-x-[18px] after:border-t-[15px] after:border-x-transparent after:border-t-[#fdb515] hover:bg-[#7f7f7f] focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#003577] data-[active=true]:bg-[#fdb515] data-[active=true]:text-slate-950 data-[active=true]:after:block md:min-h-[134px] md:px-4 md:text-base"
+                role="tab"
+                aria-selected="true"
+                aria-controls="testimonial-panel"
+                tabindex="0"
+                data-testimonial-index="0"
+                data-active="true"
+            >
+                <span>نام یا لوگوی<br>مشتری اول</span>
+            </button>
+            <button
+                id="testimonial-tab-2"
+                type="button"
+                class="relative flex min-h-20 snap-start items-center justify-center rounded-md bg-[#8d8d8d] px-2 py-3 text-center text-[clamp(.72rem,2.7vw,.9rem)] font-medium leading-tight text-white transition duration-300 after:absolute after:left-1/2 after:top-full after:hidden after:-translate-x-1/2 after:border-x-[18px] after:border-t-[15px] after:border-x-transparent after:border-t-[#fdb515] hover:bg-[#7f7f7f] focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#003577] data-[active=true]:bg-[#fdb515] data-[active=true]:text-slate-950 data-[active=true]:after:block md:min-h-[134px] md:px-4 md:text-base"
+                role="tab"
+                aria-selected="false"
+                aria-controls="testimonial-panel"
+                tabindex="-1"
+                data-testimonial-index="1"
+                data-active="false"
+            >
+                <span>نام یا لوگوی<br>مشتری دوم</span>
+            </button>
+            <button
+                id="testimonial-tab-3"
+                type="button"
+                class="relative flex min-h-20 snap-start items-center justify-center rounded-md bg-[#8d8d8d] px-2 py-3 text-center text-[clamp(.72rem,2.7vw,.9rem)] font-medium leading-tight text-white transition duration-300 after:absolute after:left-1/2 after:top-full after:hidden after:-translate-x-1/2 after:border-x-[18px] after:border-t-[15px] after:border-x-transparent after:border-t-[#fdb515] hover:bg-[#7f7f7f] focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#003577] data-[active=true]:bg-[#fdb515] data-[active=true]:text-slate-950 data-[active=true]:after:block md:min-h-[134px] md:px-4 md:text-base"
+                role="tab"
+                aria-selected="false"
+                aria-controls="testimonial-panel"
+                tabindex="-1"
+                data-testimonial-index="2"
+                data-active="false"
+            >
+                <span>نام یا لوگوی<br>مشتری سوم</span>
+            </button>
+            <button
+                id="testimonial-tab-4"
+                type="button"
+                class="relative flex min-h-20 snap-start items-center justify-center rounded-md bg-[#8d8d8d] px-2 py-3 text-center text-[clamp(.72rem,2.7vw,.9rem)] font-medium leading-tight text-white transition duration-300 after:absolute after:left-1/2 after:top-full after:hidden after:-translate-x-1/2 after:border-x-[18px] after:border-t-[15px] after:border-x-transparent after:border-t-[#fdb515] hover:bg-[#7f7f7f] focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#003577] data-[active=true]:bg-[#fdb515] data-[active=true]:text-slate-950 data-[active=true]:after:block md:min-h-[134px] md:px-4 md:text-base"
+                role="tab"
+                aria-selected="false"
+                aria-controls="testimonial-panel"
+                tabindex="-1"
+                data-testimonial-index="3"
+                data-active="false"
+            >
+                <span>نام یا لوگوی<br>مشتری چهارم</span>
+            </button>
+            <button
+                id="testimonial-tab-5"
+                type="button"
+                class="relative flex min-h-20 snap-start items-center justify-center rounded-md bg-[#8d8d8d] px-2 py-3 text-center text-[clamp(.72rem,2.7vw,.9rem)] font-medium leading-tight text-white transition duration-300 after:absolute after:left-1/2 after:top-full after:hidden after:-translate-x-1/2 after:border-x-[18px] after:border-t-[15px] after:border-x-transparent after:border-t-[#fdb515] hover:bg-[#7f7f7f] focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#003577] data-[active=true]:bg-[#fdb515] data-[active=true]:text-slate-950 data-[active=true]:after:block md:min-h-[134px] md:px-4 md:text-base"
+                role="tab"
+                aria-selected="false"
+                aria-controls="testimonial-panel"
+                tabindex="-1"
+                data-testimonial-index="4"
+                data-active="false"
+            >
+                <span>نام یا لوگوی<br>مشتری پنجم</span>
+            </button>
+            <button
+                id="testimonial-tab-6"
+                type="button"
+                class="relative flex min-h-20 snap-start items-center justify-center rounded-md bg-[#8d8d8d] px-2 py-3 text-center text-[clamp(.72rem,2.7vw,.9rem)] font-medium leading-tight text-white transition duration-300 after:absolute after:left-1/2 after:top-full after:hidden after:-translate-x-1/2 after:border-x-[18px] after:border-t-[15px] after:border-x-transparent after:border-t-[#fdb515] hover:bg-[#7f7f7f] focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#003577] data-[active=true]:bg-[#fdb515] data-[active=true]:text-slate-950 data-[active=true]:after:block md:min-h-[134px] md:px-4 md:text-base"
+                role="tab"
+                aria-selected="false"
+                aria-controls="testimonial-panel"
+                tabindex="-1"
+                data-testimonial-index="5"
+                data-active="false"
+            >
+                <span>نام یا لوگوی<br>مشتری ششم</span>
+            </button>
+        </div>
+
+        <div
+            id="testimonial-panel"
+            class="mt-4 grid grid-cols-[4.75rem_minmax(0,1fr)] items-start gap-x-4 gap-y-6 transition duration-300 motion-reduce:transition-none sm:grid-cols-[6rem_minmax(0,1fr)] sm:gap-x-6 md:mt-8 lg:grid-cols-[minmax(0,1fr)_9rem_minmax(0,1.08fr)] lg:items-center lg:gap-x-7"
+            role="tabpanel"
+            aria-labelledby="testimonial-tab-1"
+            aria-live="polite"
+            dir="ltr"
+        >
+            <figure class="col-span-2 overflow-hidden rounded-md bg-slate-200 lg:col-span-1 lg:col-start-1 lg:row-start-1">
+                <img
+                    id="testimonial-image"
+                    src="{% static 'image-man_ImgID1.png' %}"
+                    alt="مدیر یک مجموعه صنعتی در کنار قلاب جرثقیل"
+                    class="aspect-[3/2] h-auto w-full object-cover"
+                    loading="lazy"
+                >
+            </figure>
+
+            <img
+                src="{% static 'icons/quote-icon.svg' %}"
+                alt=""
+                class="col-start-1 row-start-2 mt-1 h-auto w-full max-w-20 justify-self-start sm:max-w-24 lg:col-start-2 lg:row-start-1 lg:mt-0 lg:max-w-36 lg:justify-self-center"
+                aria-hidden="true"
+            >
+
+            <blockquote class="col-start-2 row-start-2 text-right text-slate-950 lg:col-start-3 lg:row-start-1" dir="rtl">
+                <p id="testimonial-quote" class="text-[clamp(1.2rem,2.15vw,2.45rem)] font-medium leading-[1.65] tracking-[-0.02em]">
+                    وزنه برای کارخانه‌ی ما جرثقیلی ساخت که جریان کار و جابجایی را در خط تولید روان‌تر و آسان‌تر کرد.
+                </p>
+                <footer class="mt-5 text-[clamp(.9rem,1.15vw,1.2rem)] font-normal leading-relaxed sm:mt-7">
+                    <cite id="testimonial-name" class="block not-italic font-medium">رضا میر عظیمی</cite>
+                    <span id="testimonial-role" class="block">مدیرعامل استیل تهران</span>
+                </footer>
+            </blockquote>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    (() => {
+        const slides = [
+            {
+                title: "توان جابجایی<br class='hidden sm:block'> آنچه مهم است.",
+                subtitle: "جرثقیل‌های پرتوان برای بالابردن روحیه‌ی کاری شما",
+                image: "{% static 'main-page-header.jpg' %}",
+            },
+            {
+                title: "توان جابجایی<br class='hidden sm:block'> آنچه مهم است.",
+                subtitle: "جرثقیل‌های پرتوان برای بالابردن روحیه‌ی کاری شما",
+                image: "{% static 'main-page-header.jpg' %}",
+            },
+            {
+                title: "توان جابجایی<br class='hidden sm:block'> آنچه مهم است.",
+                subtitle: "جرثقیل‌های پرتوان برای بالابردن روحیه‌ی کاری شما",
+                image: "{% static 'main-page-header.jpg' %}",
+            },
+        ];
+
+        const hero = document.querySelector("#home-hero");
+        const background = document.querySelector("#hero-background");
+        const copy = document.querySelector("#hero-copy");
+        const title = document.querySelector("#hero-title");
+        const subtitle = document.querySelector("#hero-subtitle");
+        const pagination = document.querySelector("#hero-pagination");
+        const bars = [...document.querySelectorAll("#hero-bars [data-slide-index]")];
+        const previousButton = document.querySelector("#hero-previous");
+        const nextButton = document.querySelector("#hero-next");
+
+        const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+        const toPersianNumber = (number) => String(number).replace(/\d/g, (digit) => persianDigits[digit]);
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        let activeSlide = 0;
+        let autoplay;
+
+        function renderSlide(index) {
+            activeSlide = (index + slides.length) % slides.length;
+            const slide = slides[activeSlide];
+
+            copy.classList.add("opacity-0", "translate-y-3");
+            background.classList.add("opacity-70");
+
+            window.setTimeout(() => {
+                title.innerHTML = slide.title;
+                subtitle.textContent = slide.subtitle;
+                background.style.backgroundImage = `url("${slide.image}")`;
+                pagination.textContent = `${toPersianNumber(activeSlide + 1)}/${toPersianNumber(slides.length)}`;
+                pagination.setAttribute(
+                    "aria-label",
+                    `اسلاید ${toPersianNumber(activeSlide + 1)} از ${toPersianNumber(slides.length)}`,
+                );
+                bars.forEach((bar, barIndex) => {
+                    bar.dataset.active = String(barIndex === activeSlide);
+                });
+
+                copy.classList.remove("opacity-0", "translate-y-3");
+                background.classList.remove("opacity-70");
+            }, prefersReducedMotion ? 0 : 220);
+        }
+
+        function resetAutoplay() {
+            window.clearInterval(autoplay);
+            if (!prefersReducedMotion) {
+                autoplay = window.setInterval(() => renderSlide(activeSlide + 1), 7000);
+            }
+        }
+
+        previousButton.addEventListener("click", () => {
+            renderSlide(activeSlide - 1);
+            resetAutoplay();
+        });
+
+        nextButton.addEventListener("click", () => {
+            renderSlide(activeSlide + 1);
+            resetAutoplay();
+        });
+
+        bars.forEach((bar) => {
+            bar.addEventListener("click", () => {
+                renderSlide(Number(bar.dataset.slideIndex));
+                resetAutoplay();
+            });
+        });
+
+        hero.addEventListener("mouseenter", () => window.clearInterval(autoplay));
+        hero.addEventListener("mouseleave", resetAutoplay);
+        hero.addEventListener("focusin", () => window.clearInterval(autoplay));
+        hero.addEventListener("focusout", resetAutoplay);
+
+        resetAutoplay();
+    })();
+
+    (() => {
+        const section = document.querySelector("#home-statistics");
+        const counters = [...section.querySelectorAll(".stat-counter")];
+        const numberFormatter = new Intl.NumberFormat("fa-IR", { useGrouping: false });
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        let hasStarted = false;
+
+        counters.forEach((counter) => {
+            counter.textContent = numberFormatter.format(0);
+        });
+
+        function animateCounter(counter) {
+            const target = Number(counter.dataset.target);
+
+            if (prefersReducedMotion) {
+                counter.textContent = numberFormatter.format(target);
+                return;
+            }
+
+            const duration = 1800;
+            const startTime = performance.now();
+
+            function update(currentTime) {
+                const elapsed = Math.min((currentTime - startTime) / duration, 1);
+                const easedProgress = 1 - Math.pow(1 - elapsed, 3);
+                counter.textContent = numberFormatter.format(Math.round(target * easedProgress));
+
+                if (elapsed < 1) {
+                    window.requestAnimationFrame(update);
+                }
+            }
+
+            window.requestAnimationFrame(update);
+        }
+
+        function startCounters() {
+            if (hasStarted) return;
+            hasStarted = true;
+            counters.forEach(animateCounter);
+        }
+
+        if (!("IntersectionObserver" in window)) {
+            startCounters();
+            return;
+        }
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries.some((entry) => entry.isIntersecting)) {
+                    startCounters();
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.3 },
+        );
+
+        observer.observe(section);
+    })();
+
+    (() => {
+        const section = document.querySelector("#home-testimonials");
+        if (!section) return;
+
+        const testimonials = [
+            {
+                quote: "وزنه برای کارخانه‌ی ما جرثقیلی ساخت که جریان کار و جابجایی را در خط تولید روان‌تر و آسان‌تر کرد.",
+                name: "رضا میر عظیمی",
+                role: "مدیرعامل استیل تهران",
+                image: "{% static 'image-man_ImgID1.png' %}",
+                imageAlt: "مدیر یک مجموعه صنعتی در کنار قلاب جرثقیل",
+            },
+            {
+                quote: "کیفیت ساخت، دقت اجرا و همراهی تیم وزنه باعث شد پروژه‌ی توسعه‌ی خط تولید ما دقیقاً طبق برنامه پیش برود.",
+                name: "علی رضایی",
+                role: "مدیر پروژه صنایع آریا",
+                image: "{% static 'image-man_ImgID1.png' %}",
+                imageAlt: "مدیر پروژه در فضای صنعتی",
+            },
+            {
+                quote: "جرثقیل سفارشی وزنه هم ایمنی مجموعه را افزایش داد و هم سرعت جابجایی مواد را به شکل محسوسی بهتر کرد.",
+                name: "محمد کریمی",
+                role: "مدیر تولید فولاد البرز",
+                image: "{% static 'image-man_ImgID1.png' %}",
+                imageAlt: "مدیر تولید در کنار تجهیزات بالابری",
+            },
+            {
+                quote: "از طراحی اولیه تا نصب و راه‌اندازی، تیم وزنه پاسخ‌گو و دقیق بود و نتیجه کاملاً با نیاز کارخانه هماهنگ شد.",
+                name: "سارا احمدی",
+                role: "مدیر عملیات پیشرو صنعت",
+                image: "{% static 'image-man_ImgID1.png' %}",
+                imageAlt: "مدیر عملیات در محیط کارخانه",
+            },
+            {
+                quote: "پشتیبانی سریع و کیفیت قطعات وزنه خیال ما را از عملکرد مداوم تجهیزات در شیفت‌های سنگین راحت کرده است.",
+                name: "حامد مرادی",
+                role: "مدیر نگهداری ماشین‌سازی شرق",
+                image: "{% static 'image-man_ImgID1.png' %}",
+                imageAlt: "مدیر نگهداری تجهیزات صنعتی",
+            },
+            {
+                quote: "راهکار مهندسی وزنه فضای کاری ما را بهینه کرد و امکان جابجایی بارهای سنگین را با کنترل بیشتری فراهم ساخت.",
+                name: "نادر قاسمی",
+                role: "مدیرعامل سازه‌گستر پارس",
+                image: "{% static 'image-man_ImgID1.png' %}",
+                imageAlt: "مدیر مجموعه در سالن تولید",
+            },
+        ];
+
+        const tabs = [...section.querySelectorAll("[data-testimonial-index]")];
+        const panel = section.querySelector("#testimonial-panel");
+        const image = section.querySelector("#testimonial-image");
+        const quote = section.querySelector("#testimonial-quote");
+        const name = section.querySelector("#testimonial-name");
+        const role = section.querySelector("#testimonial-role");
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        let activeIndex = 0;
+        let updateTimer;
+
+        function selectTestimonial(index, shouldFocus = false) {
+            const nextIndex = (index + tabs.length) % tabs.length;
+            const testimonial = testimonials[nextIndex];
+            window.clearTimeout(updateTimer);
+
+            tabs.forEach((tab, tabIndex) => {
+                const isActive = tabIndex === nextIndex;
+                tab.dataset.active = String(isActive);
+                tab.setAttribute("aria-selected", String(isActive));
+                tab.tabIndex = isActive ? 0 : -1;
+            });
+
+            panel.classList.add("opacity-0", "translate-y-2");
+            updateTimer = window.setTimeout(() => {
+                image.src = testimonial.image;
+                image.alt = testimonial.imageAlt;
+                quote.textContent = testimonial.quote;
+                name.textContent = testimonial.name;
+                role.textContent = testimonial.role;
+                panel.setAttribute("aria-labelledby", tabs[nextIndex].id);
+                panel.classList.remove("opacity-0", "translate-y-2");
+            }, prefersReducedMotion ? 0 : 140);
+
+            activeIndex = nextIndex;
+            tabs[nextIndex].scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "nearest", inline: "center" });
+            if (shouldFocus) tabs[nextIndex].focus();
+        }
+
+        tabs.forEach((tab, index) => {
+            tab.addEventListener("click", () => selectTestimonial(index));
+            tab.addEventListener("keydown", (event) => {
+                if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+                event.preventDefault();
+
+                if (event.key === "Home") selectTestimonial(0, true);
+                if (event.key === "End") selectTestimonial(tabs.length - 1, true);
+                if (event.key === "ArrowLeft") selectTestimonial(activeIndex + 1, true);
+                if (event.key === "ArrowRight") selectTestimonial(activeIndex - 1, true);
+            });
+        });
+    })();
+</script>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% load static blog_extras i18n %}
+<article class="group relative overflow-hidden rounded-sm bg-white shadow-[0_1px_0_rgba(15,23,42,.06)] transition duration-300 hover:-translate-y-1 hover:shadow-xl focus-within:-translate-y-1 motion-reduce:transition-none">
+  <a href="{{ post.get_absolute_url }}" class="block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#fdb515]" aria-label="{% blocktranslate with title=post.display_title %}مطالعه {{ title }}{% endblocktranslate %}">
+    <div class="aspect-[16/10] overflow-hidden bg-[#777]">
+      {% if post.cover_image %}
+        <img src="{{ post.cover_image.url }}" alt="{{ post.display_title }}" class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035] motion-reduce:transition-none" loading="lazy">
+      {% else %}
+        <img src="{% static post.fallback_image_name %}" alt="{{ post.display_title }}" class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035] motion-reduce:transition-none" loading="lazy">
+      {% endif %}
+    </div>
+
+    <div class="relative min-h-56 bg-white px-6 pb-7 pt-12 text-slate-950 transition-colors duration-300 group-hover:bg-[#003577] group-hover:text-white group-focus-within:bg-[#003577] group-focus-within:text-white motion-reduce:transition-none sm:min-h-60">
+      {% with localized_date=post.published_at|localized_date_parts %}
+        <time datetime="{{ post.published_at|date:'c' }}" class="absolute -top-8 end-6 flex h-16 w-16 flex-col items-center justify-center rounded-sm bg-[#003577] px-1 py-1 text-center text-[10px] font-light leading-[1.25] text-white transition-colors duration-300 group-hover:bg-[#fdb515] group-hover:text-slate-950 group-focus-within:bg-[#fdb515] group-focus-within:text-slate-950 motion-reduce:transition-none">
+          <span class="text-xs font-normal leading-none">{{ localized_date.day }}</span>
+          <span class="mt-1">{{ localized_date.month }}</span>
+          <span>{{ localized_date.year }}</span>
+        </time>
+      {% endwith %}
+
+      <h2 class="text-lg font-bold leading-8 sm:text-xl sm:leading-9">{{ post.display_title }}</h2>
+      <p class="mt-5 line-clamp-3 text-sm leading-7 text-slate-600 transition-colors duration-300 group-hover:text-white/80 group-focus-within:text-white/80 motion-reduce:transition-none">{{ post.display_excerpt }}</p>
+    </div>
+  </a>
+</article>

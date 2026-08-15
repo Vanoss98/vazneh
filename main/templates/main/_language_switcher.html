@@ -1,0 +1,18 @@
+{% load i18n %}
+<div class="flex items-center gap-2 whitespace-nowrap" dir="ltr" aria-label="{% translate 'انتخاب زبان' %}">
+  <form action="{% url 'set_language' %}" method="post" class="inline-flex">
+    {% csrf_token %}
+    <input name="next" type="hidden" value="{{ request.get_full_path }}">
+    <button name="language" value="en" type="submit" lang="en" class="transition hover:text-[#fdb515] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#fdb515] {% if LANGUAGE_CODE == 'en' %}text-[#fdb515]{% endif %}">
+      En
+    </button>
+  </form>
+  <span class="text-current opacity-50" aria-hidden="true">|</span>
+  <form action="{% url 'set_language' %}" method="post" class="inline-flex">
+    {% csrf_token %}
+    <input name="next" type="hidden" value="{{ request.get_full_path }}">
+    <button name="language" value="fa" type="submit" lang="fa" class="transition hover:text-[#fdb515] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#fdb515] {% if LANGUAGE_CODE == 'fa' %}text-[#fdb515]{% endif %}">
+      Fa
+    </button>
+  </form>
+</div>

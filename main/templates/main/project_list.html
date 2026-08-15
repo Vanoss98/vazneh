@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% translate "پروژه‌های وزنه" %}{% endblock %}
+{% block meta_description %}{% translate "پروژه‌های صنعتی اجراشده توسط شرکت وزنه" %}{% endblock %}
+
+{% block extra_head %}
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  crossorigin=""
+>
+{% endblock %}
+
+{% block content %}
+<section class="relative isolate min-h-[320px] overflow-hidden bg-slate-950 sm:min-h-[380px] lg:min-h-[440px]" aria-labelledby="projects-hero-title">
+  <img src="{% static 'project-header.png' %}" alt="" class="absolute inset-0 -z-20 h-full w-full object-cover" aria-hidden="true">
+  <div class="absolute inset-0 -z-10 {% if LANGUAGE_BIDI %}bg-[linear-gradient(90deg,rgba(0,0,0,.08)_0%,rgba(0,0,0,.18)_42%,rgba(0,0,0,.64)_100%)]{% else %}bg-[linear-gradient(270deg,rgba(0,0,0,.08)_0%,rgba(0,0,0,.18)_42%,rgba(0,0,0,.64)_100%)]{% endif %}" aria-hidden="true"></div>
+
+  <div class="mx-auto flex min-h-[320px] w-full items-center px-5 py-16 sm:min-h-[380px] sm:px-8 lg:min-h-[440px] lg:w-4/5 lg:px-0">
+    <h1 id="projects-hero-title" class="me-auto text-[clamp(2.5rem,4.8vw,5rem)] font-bold leading-tight text-white drop-shadow-[0_4px_14px_rgba(0,0,0,.65)]">
+      {% translate "پروژه‌های وزنه" %}
+    </h1>
+  </div>
+</section>
+
+<section class="bg-[#fafafa] px-4 pb-40 pt-14 sm:px-6 sm:pt-16 lg:px-0 lg:pb-48 lg:pt-20" aria-labelledby="projects-list-title">
+  <div class="mx-auto w-full lg:w-4/5">
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,3fr)_minmax(18rem,2fr)] lg:items-center lg:gap-12" dir="{% if LANGUAGE_BIDI %}ltr{% else %}rtl{% endif %}">
+      <div class="lg:col-start-2 lg:row-start-1" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">
+        <h2 class="text-2xl font-bold text-slate-950 sm:text-3xl">{% translate "جستجوی پروژه‌ها" %}</h2>
+        <p class="mt-3 text-sm leading-7 text-slate-600">{% translate "نام پروژه، شهر یا منطقه را جستجو کنید." %}</p>
+        <form action="{% url 'main:project-list' %}" method="get" class="relative mt-5 max-w-md">
+          <input type="hidden" name="sort" value="{{ current_sort }}">
+          <label for="project-search" class="sr-only">{% translate "جستجوی پروژه بر اساس منطقه" %}</label>
+          <input
+            id="project-search"
+            type="search"
+            name="q"
+            value="{{ search_query }}"
+            placeholder="{% translate 'جستجو براساس منطقه' %}"
+            class="min-h-12 w-full rounded-sm border-2 border-[#fdb515] bg-white py-3 pe-12 ps-4 text-sm font-semibold text-slate-950 outline-none placeholder:text-slate-500 focus:ring-2 focus:ring-[#003577]/25"
+          >
+          <button type="submit" class="absolute end-1 top-1 flex h-10 w-10 items-center justify-center rounded-sm text-slate-950 transition hover:bg-[#fdb515] focus-visible:outline-2 focus-visible:outline-[#003577]" aria-label="{% translate 'جستجو' %}">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="m20 20-4-4"></path>
+            </svg>
+          </button>
+        </form>
+        {% if search_query %}
+          <a href="{% url 'main:project-list' %}" class="mt-3 inline-flex min-h-11 items-center text-sm font-bold text-[#003577] transition hover:text-[#f0a400] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#fdb515]">{% translate "حذف جستجو" %}</a>
+        {% endif %}
+      </div>
+
+      <div class="relative z-0 h-72 overflow-hidden rounded-sm border border-slate-200 bg-slate-200 sm:h-88 lg:col-start-1 lg:row-start-1 lg:h-[390px]" id="projects-map" aria-label="{% translate 'نقشه پروژه‌های وزنه' %}"></div>
+      {{ map_projects|json_script:"project-map-data" }}
+    </div>
+
+    <div class="mt-16 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between lg:mt-20">
+      <h2 id="projects-list-title" class="text-start text-3xl font-bold text-slate-950 sm:text-4xl">{% translate "لیست پروژه‌های وزنه" %}</h2>
+
+      <div class="flex min-h-12 items-center gap-3">
+        <label for="project-sort" class="shrink-0 text-sm font-bold text-slate-950">{% translate "ترتیب:" %}</label>
+        <div class="relative">
+          <select id="project-sort" class="min-h-11 min-w-40 appearance-none rounded-sm border-2 border-[#fdb515] bg-[#ededed] py-2 pe-10 ps-4 text-sm font-bold text-slate-950 outline-none transition focus:ring-2 focus:ring-[#003577]/30" data-project-sort>
+            <option value="newest" {% if current_sort == "newest" %}selected{% endif %}>{% translate "جدیدترین" %}</option>
+            <option value="oldest" {% if current_sort == "oldest" %}selected{% endif %}>{% translate "قدیمی‌ترین" %}</option>
+            <option value="alphabetical" {% if current_sort == "alphabetical" %}selected{% endif %}>{% translate "حروف الفبا" %}</option>
+          </select>
+          <span class="pointer-events-none absolute end-4 top-1/2 h-2.5 w-2.5 -translate-y-2 rotate-45 border-b-2 border-r-2 border-slate-950" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-9 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:gap-6">
+      {% for project in projects %}
+        {% include "main/_project_card.html" with project=project %}
+      {% empty %}
+        <div class="col-span-full flex min-h-72 flex-col items-center justify-center rounded-sm border border-dashed border-slate-300 bg-white px-6 text-center">
+          <p class="text-xl font-bold text-[#003577]">{% translate "پروژه‌ای پیدا نشد" %}</p>
+          <p class="mt-2 text-sm text-slate-600">{% translate "عبارت جستجو را تغییر دهید." %}</p>
+          <a href="{% url 'main:project-list' %}" class="mt-6 rounded-sm bg-[#fdb515] px-6 py-3 font-bold text-slate-950 transition hover:bg-[#ffca45] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#003577]">{% translate "نمایش همه پروژه‌ها" %}</a>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if is_paginated %}
+      <nav class="mt-12 flex items-center justify-center gap-2" aria-label="{% translate 'صفحه‌بندی پروژه‌ها' %}" dir="ltr">
+        {% if page_obj.has_previous %}
+          <a href="?{% if project_querystring %}{{ project_querystring }}&amp;{% endif %}page={{ page_obj.previous_page_number }}" class="flex h-11 min-w-11 items-center justify-center rounded-sm border border-[#003577] px-3 font-bold text-[#003577] transition hover:bg-[#003577] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#fdb515]" aria-label="{% translate 'صفحه قبل' %}">←</a>
+        {% endif %}
+        {% for page_number in paginator.page_range %}
+          <a href="?{% if project_querystring %}{{ project_querystring }}&amp;{% endif %}page={{ page_number }}" class="flex h-11 min-w-11 items-center justify-center rounded-sm border px-3 font-bold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#fdb515] {% if page_number == page_obj.number %}border-[#fdb515] bg-[#fdb515] text-slate-950{% else %}border-[#003577] text-[#003577] hover:bg-[#003577] hover:text-white{% endif %}" {% if page_number == page_obj.number %}aria-current="page"{% endif %}>{{ page_number }}</a>
+        {% endfor %}
+        {% if page_obj.has_next %}
+          <a href="?{% if project_querystring %}{{ project_querystring }}&amp;{% endif %}page={{ page_obj.next_page_number }}" class="flex h-11 min-w-11 items-center justify-center rounded-sm border border-[#003577] px-3 font-bold text-[#003577] transition hover:bg-[#003577] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#fdb515]" aria-label="{% translate 'صفحه بعد' %}">→</a>
+        {% endif %}
+      </nav>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin=""
+></script>
+<script>
+  (() => {
+    const sortSelect = document.querySelector('[data-project-sort]');
+    sortSelect?.addEventListener('change', () => {
+      const url = new URL(window.location.href);
+      url.searchParams.set('sort', sortSelect.value);
+      url.searchParams.delete('page');
+      window.location.assign(url.toString());
+    });
+
+    const mapElement = document.getElementById('projects-map');
+    const dataElement = document.getElementById('project-map-data');
+    if (!mapElement || !dataElement || typeof L === 'undefined') return;
+
+    const projects = JSON.parse(dataElement.textContent);
+    const map = L.map(mapElement, { scrollWheelZoom: false }).setView([32.4279, 53.6880], 5);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    const projectIcon = L.icon({
+      iconUrl: '{% static "icons/map-icon-yellow.svg" %}',
+      iconSize: [34, 48],
+      iconAnchor: [17, 48],
+      popupAnchor: [0, -44]
+    });
+    const bounds = [];
+
+    projects.forEach((project) => {
+      const coordinates = [Number(project.latitude), Number(project.longitude)];
+      const popup = document.createElement('div');
+      popup.dir = '{{ LANGUAGE_CODE }}' === 'fa' ? 'rtl' : 'ltr';
+      popup.className = 'min-w-36 text-start';
+
+      const title = document.createElement('strong');
+      title.textContent = project.title;
+      const location = document.createElement('span');
+      location.className = 'mt-1 block text-xs text-slate-600';
+      location.textContent = project.location;
+      const link = document.createElement('a');
+      link.href = project.url;
+      link.className = 'mt-2 inline-block font-bold text-[#003577]';
+      link.textContent = '{% translate "مشاهده پروژه" %}';
+      popup.append(title, location, link);
+
+      L.marker(coordinates, { icon: projectIcon }).addTo(map).bindPopup(popup);
+      bounds.push(coordinates);
+    });
+
+    if (bounds.length === 1) map.setView(bounds[0], 11);
+    else if (bounds.length > 1) map.fitBounds(bounds, { padding: [45, 45] });
+  })();
+</script>
+{% endblock %}

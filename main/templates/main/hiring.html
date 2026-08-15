@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% translate "استخدام در وزنه" %}{% endblock %}
+{% block meta_description %}{% translate "فرصت همکاری با تیم مهندسی و صنعتی وزنه و ارسال درخواست استخدام" %}{% endblock %}
+
+{% block content %}
+<section class="relative isolate min-h-[340px] overflow-hidden bg-slate-200 sm:min-h-[420px] lg:min-h-[500px]" aria-labelledby="hiring-hero-title">
+  <img src="{% static 'contact-header.jpeg' %}" alt="" class="absolute inset-0 -z-20 h-full w-full object-cover" aria-hidden="true">
+  <div class="absolute inset-0 -z-10 bg-white/30" aria-hidden="true"></div>
+  <div class="mx-auto flex min-h-[340px] w-full items-center px-5 py-16 sm:min-h-[420px] sm:px-8 lg:min-h-[500px] lg:w-4/5 lg:px-0">
+    <div class="me-auto max-w-3xl text-start text-slate-950">
+      <p class="mb-3 text-sm font-bold text-[#003577] sm:text-base">{% translate "فرصت همکاری" %}</p>
+      <h1 id="hiring-hero-title" class="text-[clamp(2.35rem,4.5vw,4.8rem)] font-bold leading-tight drop-shadow-[0_2px_8px_rgba(255,255,255,.65)]">{% translate "با هم، صنعت را" %}<br class="hidden sm:block"> {% translate "بالاتر می‌بریم." %}</h1>
+    </div>
+  </div>
+</section>
+
+<section class="bg-[#fafafa] px-4 pb-40 pt-14 sm:px-6 sm:pt-16 lg:px-0 lg:pb-48 lg:pt-20" aria-labelledby="hiring-form-title">
+  <div class="mx-auto w-full lg:w-4/5">
+    {% if messages %}
+      <div class="mb-8" aria-live="polite">
+        {% for message in messages %}
+          <p class="rounded-sm border border-emerald-300 bg-emerald-50 px-5 py-4 text-sm font-bold text-emerald-800">{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(18rem,.92fr)] lg:items-start lg:gap-16" dir="{% if LANGUAGE_BIDI %}ltr{% else %}rtl{% endif %}">
+      <div class="order-2 rounded-sm bg-[#e7e7e7] p-5 sm:p-8 lg:order-1" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">
+        <div class="flex items-start justify-between gap-6">
+          <div>
+            <h2 id="hiring-form-title" class="text-xl font-bold text-slate-950 sm:text-2xl">{% translate "درخواست همکاری" %}</h2>
+            <p class="mt-2 text-sm leading-7 text-slate-600">{% translate "اطلاعات خود را وارد کنید؛ موارد ستاره‌دار الزامی هستند." %}</p>
+          </div>
+          <img src="{% static 'icons/user-icon-yellow.svg' %}" alt="" class="h-12 w-12 shrink-0 rounded-sm bg-[#003577] p-2" aria-hidden="true">
+        </div>
+
+        <form method="post" enctype="multipart/form-data" class="mt-7 space-y-5" novalidate>
+          {% csrf_token %}
+          {{ form.honeypot }}
+
+          {% if form.non_field_errors %}
+            <div class="rounded-sm border border-red-300 bg-red-50 px-4 py-3" role="alert">
+              {% for error in form.non_field_errors %}<p class="text-sm font-bold text-red-700">{{ error }}</p>{% endfor %}
+            </div>
+          {% endif %}
+
+          <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <div>
+              <label for="{{ form.full_name.id_for_label }}" class="mb-2 block text-sm font-bold text-slate-950">{% translate "نام و نام خانوادگی" %} <span class="text-red-700">*</span></label>
+              {{ form.full_name }}
+              {% for error in form.full_name.errors %}<p class="mt-1 text-xs font-bold text-red-700">{{ error }}</p>{% endfor %}
+            </div>
+            <div>
+              <label for="{{ form.phone.id_for_label }}" class="mb-2 block text-sm font-bold text-slate-950">{% translate "شماره تماس" %} <span class="text-red-700">*</span></label>
+              {{ form.phone }}
+              {% for error in form.phone.errors %}<p class="mt-1 text-xs font-bold text-red-700">{{ error }}</p>{% endfor %}
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <div>
+              <label for="{{ form.email.id_for_label }}" class="mb-2 block text-sm font-bold text-slate-950">{% translate "ایمیل" %} <span class="text-red-700">*</span></label>
+              {{ form.email }}
+              {% for error in form.email.errors %}<p class="mt-1 text-xs font-bold text-red-700">{{ error }}</p>{% endfor %}
+            </div>
+            <div>
+              <label for="{{ form.experience_years.id_for_label }}" class="mb-2 block text-sm font-bold text-slate-950">{% translate "سابقه کار" %} <span class="font-normal text-slate-500">{% translate "(اختیاری)" %}</span></label>
+              {{ form.experience_years }}
+              {% for error in form.experience_years.errors %}<p class="mt-1 text-xs font-bold text-red-700">{{ error }}</p>{% endfor %}
+            </div>
+          </div>
+
+          <div>
+            <label for="{{ form.desired_position.id_for_label }}" class="mb-2 block text-sm font-bold text-slate-950">{% translate "عنوان شغلی موردنظر" %} <span class="text-red-700">*</span></label>
+            {{ form.desired_position }}
+            {% for error in form.desired_position.errors %}<p class="mt-1 text-xs font-bold text-red-700">{{ error }}</p>{% endfor %}
+          </div>
+
+          <div>
+            <label for="{{ form.message.id_for_label }}" class="mb-2 block text-sm font-bold text-slate-950">{% translate "درباره خودتان" %} <span class="text-red-700">*</span></label>
+            {{ form.message }}
+            <p class="mt-1 text-xs leading-6 text-slate-500">{% translate "مهارت‌ها، تجربه مرتبط و دلیل علاقه‌مندی خود را کوتاه توضیح دهید." %}</p>
+            {% for error in form.message.errors %}<p class="mt-1 text-xs font-bold text-red-700">{{ error }}</p>{% endfor %}
+          </div>
+
+          <div>
+            <label for="{{ form.resume.id_for_label }}" class="mb-2 block text-sm font-bold text-slate-950">{% translate "رزومه" %} <span class="font-normal text-slate-500">{% translate "(اختیاری)" %}</span></label>
+            {{ form.resume }}
+            <p class="mt-2 text-xs leading-6 text-slate-500">{% translate "فرمت‌های PDF، DOC یا DOCX؛ حداکثر ۵ مگابایت." %}</p>
+            {% for error in form.resume.errors %}<p class="mt-1 text-xs font-bold text-red-700">{{ error }}</p>{% endfor %}
+          </div>
+
+          <button type="submit" class="group relative flex min-h-13 w-full items-center justify-center rounded-sm bg-[#fdb515] px-12 py-3 text-sm font-bold text-slate-950 transition hover:bg-[#ffca45] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#003577]">
+            <img src="{% static 'icons/arrow-left-black.svg' %}" alt="" class="absolute start-5 h-5 w-7 transition-transform group-hover:-translate-x-1 {% if not LANGUAGE_BIDI %}rotate-180{% endif %}">
+            <span>{% translate "ارسال درخواست همکاری" %}</span>
+          </button>
+          <p class="text-center text-xs leading-6 text-slate-500">{% translate "اطلاعات شما فقط برای بررسی فرصت‌های شغلی وزنه استفاده می‌شود." %}</p>
+        </form>
+      </div>
+
+      <aside class="order-1 lg:order-2" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}" aria-labelledby="hiring-benefits-title">
+        <p class="text-sm font-bold text-[#fdb515]">{% translate "چرا وزنه؟" %}</p>
+        <h2 id="hiring-benefits-title" class="mt-2 text-[clamp(2rem,3.2vw,3.3rem)] font-bold leading-tight text-[#003577]">{% translate "جایی برای رشد" %}<br>{% translate "در کنار صنعت" %}</h2>
+        <p class="mt-5 max-w-xl text-base leading-8 text-slate-700">{% translate "ما به دنبال آدم‌هایی مسئولیت‌پذیر، دقیق و مشتاق یادگیری هستیم؛ از مهندسی و تولید تا نصب، فروش و پشتیبانی." %}</p>
+
+        <div class="mt-8 space-y-3">
+          <div class="flex items-start gap-4 rounded-sm border border-slate-200 bg-white p-4">
+            <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-[#fdb515] font-bold text-slate-950">{% translate "۱" %}</span>
+            <div><h3 class="font-bold text-slate-950">{% translate "یادگیری در پروژه‌های واقعی" %}</h3><p class="mt-1 text-sm leading-7 text-slate-600">{% translate "تجربه مستقیم در پروژه‌های صنعتی متنوع و چالش‌برانگیز." %}</p></div>
+          </div>
+          <div class="flex items-start gap-4 rounded-sm border border-slate-200 bg-white p-4">
+            <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-[#fdb515] font-bold text-slate-950">{% translate "۲" %}</span>
+            <div><h3 class="font-bold text-slate-950">{% translate "همکاری تیمی" %}</h3><p class="mt-1 text-sm leading-7 text-slate-600">{% translate "کار در کنار متخصصان طراحی، ساخت و خدمات فنی." %}</p></div>
+          </div>
+          <div class="flex items-start gap-4 rounded-sm border border-slate-200 bg-white p-4">
+            <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-[#fdb515] font-bold text-slate-950">{% translate "۳" %}</span>
+            <div><h3 class="font-bold text-slate-950">{% translate "مسیر پیشرفت" %}</h3><p class="mt-1 text-sm leading-7 text-slate-600">{% translate "فرصت توسعه مهارت و پذیرش مسئولیت‌های بزرگ‌تر." %}</p></div>
+          </div>
+        </div>
+
+        <div class="mt-8 rounded-sm bg-[#003577] px-5 py-6 text-white">
+          <p class="font-bold text-[#fdb515]">{% translate "سؤالی درباره همکاری دارید؟" %}</p>
+          <p class="mt-2 text-sm leading-7 text-white/80">{% translate "از صفحه تماس با ما برای ارتباط با واحد منابع انسانی استفاده کنید." %}</p>
+          <a href="{% url 'main:contact' %}" class="mt-4 inline-flex min-h-11 items-center font-bold text-white transition hover:text-[#fdb515] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#fdb515]">{% translate "تماس با وزنه" %} {% if LANGUAGE_BIDI %}←{% else %}→{% endif %}</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+{% endblock %}

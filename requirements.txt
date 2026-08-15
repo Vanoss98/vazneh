@@ -1,0 +1,5 @@
+Django==4.2.25
+Pillow==9.0.1
+bleach==6.1.0
+django-ckeditor-5==0.2.20
+jdatetime==4.1.1
