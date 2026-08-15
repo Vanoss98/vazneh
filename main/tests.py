@@ -275,6 +275,20 @@ class CatalogueContentTests(TestCase):
         self.assertContains(response, "شرکت وزنه در سال ۱۳۴۳ تأسیس شد")
         self.assertContains(response, "از سال ۱۳۸۵ شرکت وزنه به مجموعه گروه صنعتی ماموت پیوست")
 
+    def test_about_page_uses_contact_image_without_slider_controls(self):
+        response = self.client.get("/about/")
+
+        self.assertContains(response, 'src="/static/contact-header.jpeg"')
+        self.assertNotContains(response, 'id="hero-previous"')
+        self.assertNotContains(response, 'id="hero-next"')
+
+    def test_placeholder_certificates_and_home_video_are_hidden(self):
+        about_response = self.client.get("/about/")
+        home_response = self.client.get("/")
+
+        self.assertNotContains(about_response, "گواهینامه‌های وزنه")
+        self.assertNotContains(home_response, "وزنه چطور کار می‌کند؟")
+
     def test_home_page_does_not_show_fabricated_testimonials(self):
         response = self.client.get("/")
 
