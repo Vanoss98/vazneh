@@ -80,10 +80,10 @@
             </div>
 
             <div class="flex w-full flex-col gap-4 lg:max-w-[340px] lg:justify-self-end">
-                <a href="#" class="group relative flex min-h-14 w-full items-center justify-center rounded-md bg-[#003577] px-12 py-3 text-base font-semibold text-[#fdb515] transition duration-300 hover:-translate-y-1 hover:bg-[#002b61] hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#fdb515] active:translate-y-0">
+                {% if site_catalog %}<a href="{{ site_catalog.file.url }}" download class="group relative flex min-h-14 w-full items-center justify-center rounded-md bg-[#003577] px-12 py-3 text-base font-semibold text-[#fdb515] transition duration-300 hover:-translate-y-1 hover:bg-[#002b61] hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#fdb515] active:translate-y-0">
                     <span class="w-full text-center">{% translate "دانلود کاتالوگ" %}</span>
                     <img src="{% static 'icons/pdf-icon.svg' %}" alt="" class="absolute end-5 h-6 w-6 transition-transform duration-300 group-hover:-translate-y-1">
-                </a>
+                </a>{% endif %}
                 <a href="{% url 'main:team' %}" class="group relative flex min-h-14 w-full items-center justify-center rounded-md bg-[#fdb515] px-12 py-3 text-base font-semibold text-slate-950 transition duration-300 hover:-translate-y-1 hover:bg-[#ffca45] hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#003577] active:translate-y-0">
                     <span class="w-full text-center">{% translate "تیم وزنه" %}</span>
                     <img src="{% static 'icons/arrow-left-black.svg' %}" alt="" class="absolute end-5 h-5 w-7 transition-transform duration-300 group-hover:-translate-x-1 {% if not LANGUAGE_BIDI %}rotate-180{% endif %}">

@@ -5,8 +5,12 @@ import subprocess
 import sys
 from types import SimpleNamespace
 
+from django.apps import apps
 from django.conf import settings
+from django.contrib import admin
+from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import SimpleTestCase, TestCase
 from django.test.utils import override_settings
 from django.urls import clear_url_caches
@@ -175,6 +179,43 @@ class VercelBlobStorageTests(SimpleTestCase):
             client.name,
             "https://example.public.blob.vercel-storage.com/crane.png",
         )
+
+
+class CatalogDownloadTests(TestCase):
+    def catalog_model(self):
+        catalog_model = apps.all_models["main"].get("catalog")
+        self.assertIsNotNone(catalog_model)
+        return catalog_model
+
+    def test_latest_catalog_is_linked_from_all_catalog_download_buttons(self):
+        Catalog = self.catalog_model()
+        catalog = Catalog.objects.create(file="catalogs/vazneh.pdf")
+        product = Product.objects.filter(is_active=True).first()
+        service = Service.objects.filter(is_active=True).first()
+
+        for url in (
+            "/",
+            "/about/",
+            product.get_absolute_url(),
+            service.get_absolute_url(),
+        ):
+            with self.subTest(url=url):
+                response = self.client.get(url)
+                self.assertContains(response, f'href="{catalog.file.url}"')
+
+    def test_catalog_only_accepts_pdf_files(self):
+        Catalog = self.catalog_model()
+        catalog = Catalog(
+            file=SimpleUploadedFile("catalog.txt", b"not a pdf"),
+        )
+
+        with self.assertRaises(ValidationError):
+            catalog.full_clean()
+
+    def test_catalog_can_be_managed_in_django_admin(self):
+        Catalog = self.catalog_model()
+
+        self.assertTrue(admin.site.is_registered(Catalog))
 
 
 class CatalogueContentTests(TestCase):

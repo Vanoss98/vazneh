@@ -51,9 +51,9 @@
         </p>
 
         <div class="mt-8 grid grid-cols-1 gap-3 sm:max-w-md">
-          {% if product.catalog_file %}
+          {% if site_catalog %}
             <a
-              href="{{ product.catalog_file.url }}"
+              href="{{ site_catalog.file.url }}"
               download
               class="group relative flex min-h-12 items-center justify-center rounded-sm bg-[#003577] px-12 py-3 text-sm font-bold text-[#fdb515] transition hover:bg-[#002a60] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#fdb515]"
             >

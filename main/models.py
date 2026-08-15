@@ -20,6 +20,23 @@ PHONE_VALIDATOR = RegexValidator(
 )
 
 
+class Catalog(models.Model):
+    file = models.FileField(
+        upload_to="catalogs/",
+        max_length=500,
+        validators=[FileExtensionValidator(allowed_extensions=("pdf",))],
+    )
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-updated_at", "-pk"]
+        verbose_name = "کاتالوگ"
+        verbose_name_plural = "کاتالوگ"
+
+    def __str__(self):
+        return "کاتالوگ شرکت وزنه"
+
+
 def validate_resume_size(uploaded_file):
     if uploaded_file.size > 5 * 1024 * 1024:
         raise ValidationError(_("حجم فایل رزومه نباید بیشتر از ۵ مگابایت باشد."))
@@ -77,7 +94,6 @@ class Product(LocalizedFieldsMixin, models.Model):
     detailed_description_en = models.TextField(blank=True)
     main_image = models.ImageField(upload_to="products/main/", blank=True, max_length=500)
     header_image = models.ImageField(upload_to="products/headers/", blank=True, max_length=500)
-    catalog_file = models.FileField(upload_to="products/catalogs/", blank=True, max_length=500)
     price = models.DecimalField(max_digits=14, decimal_places=0, db_index=True)
     is_active = models.BooleanField(default=True, db_index=True)
     similar_products = models.ManyToManyField(
@@ -398,7 +414,6 @@ class Service(LocalizedFieldsMixin, models.Model):
     detailed_description_en = models.TextField(blank=True)
     main_image = models.ImageField(upload_to="services/main/", blank=True, max_length=500)
     header_image = models.ImageField(upload_to="services/headers/", blank=True, max_length=500)
-    catalog_file = models.FileField(upload_to="services/catalogs/", blank=True, max_length=500)
     position = models.PositiveSmallIntegerField(default=0, db_index=True)
     is_active = models.BooleanField(default=True, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)

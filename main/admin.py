@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from .models import (
     BlogPost,
+    Catalog,
     ContactMessage,
     HiringRequest,
     Project,
@@ -20,6 +21,15 @@ from .models import (
     ProductSize,
     ProductType,
 )
+
+
+@admin.register(Catalog)
+class CatalogAdmin(admin.ModelAdmin):
+    list_display = ("file", "updated_at")
+    readonly_fields = ("updated_at",)
+
+    def has_add_permission(self, request):
+        return not Catalog.objects.exists()
 
 
 class BlogPostAdminForm(forms.ModelForm):
@@ -167,7 +177,7 @@ class ProductAdmin(admin.ModelAdmin):
         ),
         (
             "فایل‌ها و تصاویر",
-            {"fields": ("main_image", "header_image", "catalog_file")},
+            {"fields": ("main_image", "header_image")},
         ),
         ("محصولات مشابه", {"fields": ("similar_products",)}),
         ("تاریخ‌ها", {"fields": ("created_at", "updated_at")}),
@@ -318,7 +328,7 @@ class ServiceAdmin(admin.ModelAdmin):
         ),
         (
             "تصاویر و فایل‌ها",
-            {"fields": ("main_image", "header_image", "catalog_file")},
+            {"fields": ("main_image", "header_image")},
         ),
         ("تاریخ‌ها", {"fields": ("created_at", "updated_at")}),
     )
