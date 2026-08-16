@@ -51,6 +51,7 @@ class ProductionSettingsTests(TestCase):
         environment.update(
             {
                 "DJANGO_SECRET_KEY": "deployment-secret",
+                "DJANGO_ALLOWED_HOSTS": "localhost,127.0.0.1,.vercel.app",
                 "VERCEL": "1",
                 "VERCEL_URL": "vazneh-example.vercel.app",
             }
@@ -84,8 +85,8 @@ class ProductionSettingsTests(TestCase):
             [
                 "deployment-secret",
                 "True",
-                "['localhost', '127.0.0.1', '.vercel.app']",
-                "['https://vazneh-example.vercel.app']",
+                "['localhost', '127.0.0.1', '.vercel.app', 'vaznehco.com', 'www.vaznehco.com']",
+                "['https://vaznehco.com', 'https://www.vaznehco.com', 'https://vazneh-example.vercel.app']",
                 "True",
                 "True",
                 "('HTTP_X_FORWARDED_PROTO', 'https')",

@@ -45,8 +45,17 @@ ALLOWED_HOSTS = [
     ).split(',')
     if host.strip()
 ]
+if IS_VERCEL:
+    ALLOWED_HOSTS.extend(
+        host
+        for host in ('vaznehco.com', 'www.vaznehco.com')
+        if host not in ALLOWED_HOSTS
+    )
 
-CSRF_TRUSTED_ORIGINS = []
+CSRF_TRUSTED_ORIGINS = [
+    'https://vaznehco.com',
+    'https://www.vaznehco.com',
+]
 if vercel_url := os.getenv('VERCEL_URL'):
     CSRF_TRUSTED_ORIGINS.append(f'https://{vercel_url}')
 
