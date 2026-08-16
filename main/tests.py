@@ -290,6 +290,17 @@ class CatalogueContentTests(TestCase):
         self.assertNotContains(about_response, "گواهینامه‌های وزنه")
         self.assertNotContains(home_response, "وزنه چطور کار می‌کند؟")
 
+    def test_about_page_does_not_show_team_call_to_action(self):
+        response = self.client.get("/about/")
+
+        self.assertEqual(response.content.count(b'href="/team/"'), 1)
+
+    def test_about_page_does_not_show_placeholder_director_quote(self):
+        response = self.client.get("/about/")
+
+        self.assertNotContains(response, "مفتخریم که اهرم نیرومندی هستیم")
+        self.assertNotContains(response, "مدیرعامل شرکت وزنه")
+
     def test_home_page_does_not_show_fabricated_testimonials(self):
         response = self.client.get("/")
 

@@ -30,10 +30,12 @@
                     <span class="w-full text-center">{% translate "دانلود کاتالوگ" %}</span>
                     <img src="{% static 'icons/pdf-icon.svg' %}" alt="" class="absolute end-5 h-6 w-6 transition-transform duration-300 group-hover:-translate-y-1">
                 </a>{% endif %}
+                {% comment %}Hidden until the team page has real content.
                 <a href="{% url 'main:team' %}" class="group relative flex min-h-14 w-full items-center justify-center rounded-md bg-[#fdb515] px-12 py-3 text-base font-semibold text-slate-950 transition duration-300 hover:-translate-y-1 hover:bg-[#ffca45] hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#003577] active:translate-y-0">
                     <span class="w-full text-center">{% translate "تیم وزنه" %}</span>
                     <img src="{% static 'icons/arrow-left-black.svg' %}" alt="" class="absolute end-5 h-5 w-7 transition-transform duration-300 group-hover:-translate-x-1 {% if not LANGUAGE_BIDI %}rotate-180{% endif %}">
                 </a>
+                {% endcomment %}
             </div>
         </div>
 
@@ -174,6 +176,7 @@
     </div>
 </section>
 
+{% comment %}Hidden until the director quote content is confirmed.
 <section
     class="relative min-h-[560px] overflow-hidden bg-[#d4d7db] bg-[url('/static/boss-image.jpeg')] bg-cover bg-[position:32%_center] sm:min-h-[520px] lg:min-h-[500px] lg:bg-center"
     aria-labelledby="boss-quote"
@@ -198,6 +201,7 @@
         </div>
     </div>
 </section>
+{% endcomment %}
 {% endblock %}
 
 {% block scripts %}
